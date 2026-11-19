@@ -1,0 +1,312 @@
+# Pre-Market Report — 2026-11-19 (Thursday)
+
+- Compiled: 2026-11-19T14:39:12Z (09:39 ET — regular session opens 14:30 UTC / 09:30 ET)
+- Coverage: **24/24 scouts reported** (6 groups x news / money flow / signals / sentiment). No scout missing, failed or empty; all 24 runs of the 13:30 UTC pass completed with error:null.
+- Compiled by: **compiled locally (Journal unavailable)** — the Journal session (sess_00vz4f4id3b40x1v410o) was created, but the 24 verbatim outputs total ~315KB, which exceeds what can be delivered in session messages, and the QCA toolset exposes no file-upload path to mount them. No data was sent to Journal; the session was left idle and untouched. This report was compiled directly from the 24 verbatim scout files saved in state/scout-<job>-g<1..6>.md.
+- Source files: state/scout-{news,moneyflow,signals,sentiment}-g{1..6}.md (verbatim final outputs of today's 13:30 UTC scout runs).
+
+## Honest caveats (read before using any number)
+
+1. **All money-flow figures are the PRIOR regular session, Wed 2026-11-18 (09:30–16:00 ET).** Moomoo capital-flow tools cover the regular session only; at scout run time (13:30–13:40 UTC) today's session had not opened. Every flow scout verified this by reconciling distribution nets against the 11-18 daily history bars to the cent. **No 11-19 regular-session flow data exists yet.**
+2. **Pre-market quotes are indicative, thin and partly untimestamped.** Quote `data_date` is 11-18; the pre_market/overnight sub-blocks carry no timestamps. Signals scouts verified by arithmetic (change measured off the 11-18 close) and against timestamped rt ticks that these are today's (11-19) pre-market prints, last ticks ~08:30–08:33 ET. They will move before the open. IWM's pre-market tape is extremely thin (56,903 shares over 4.5 hours).
+3. **Kline prices are forward-adjusted (autype=1)** and in several cases far from publicly quoted levels (e.g. NVDA 150.96, MU 705.27). Anything sized off notional must be re-checked at the open.
+4. **Two pre-market single-bar anomalies — do not build on them:** GS 08:30 ET bar 147,522 sh / $128.8M = 98.5% of its recorded pre-market volume (block or simulator artefact); TGT 08:20 ET bar 400,134 sh / $66.39M ≈ 98% of its pre-market volume, venue unknown. LOW's pre-market high 227.49 printed on 1,589 shares — bad-print quality.
+5. **Closing-bar flow attribution caveat (g1):** in QQQ/SPY/IWM the 16:00 bar revises the cumulative sharply negative (e.g. QQQ +271.3M at 15:30 → −68.3M at close), likely closing-cross/late prints booked on the sell side. Printed session nets may understate real buying. Reported as-is.
+6. **Sentiment is titles-only, Chinese-language retail, small samples, fuzzy keyword matching** — cross-symbol contamination is significant; bot/hype detection is not possible with the available tool. Several names have zero usable coverage (gaps, not neutral readings).
+7. Today (19 Nov) is a **normal trading day**. Upcoming: **26 Nov US market closed (Thanksgiving); 27 Nov early close 13:00 ET.**
+8. The 08:30 ET macro prints (Philly Fed, initial jobless claims) landed at 13:30 UTC as the scout pass started — **no scout has a read of them**. Leading indicators 10:00 ET still ahead.
+9. Gather-only report: no ranking, no trade proposal, no decision, no orders. Paper account 5830109 untouched; market-data reads only.
+
+---
+
+## Market-wide read (short)
+
+**A tech-led pre-market bounce inside a daily downtrend, on a hawkish Fed backdrop.** All three index ETFs, all five semis and all six mega-caps quote green pre-market (QQQ +1.95%, SPY +1.13%, IWM +0.61%; semis +1.0% to +4.4%; mega-caps +0.5% to +4.1%), but every index ETF closed 11-18 below its 10- and 20-day SMAs with RSI 34–37, and the common damage day was 5 Nov (−4.4% to −6.5% on 2–2.5x volume). Leadership order is NDX > SPX > RTY — mega-cap tech carries the bounce, small caps participate least. The identified sentiment/flows event is the **Anthropic IPO (priced $83/share, lists today; reported raise $81.3bn vs "$94bn+" — sources conflict, unresolved)**; whether it siphons or ignites AI-chain money is debated, not known. GOOGL +4.1% pre-market has **no confirmed catalyst** — the biggest news gap of the pass.
+
+**Rates are the macro driver:** Fed October minutes show nearly all officials expecting further hikes (range held 3.75–4.00%); Waller floated 50bp in December; GS looks for 25bp in both December and March (terminal 4.25–4.50%); Dec hike >95% priced per g6; 10Y ~5.1% (single-source figure, flagged). This presses rate-sensitive small caps (IWM) and financials: JPM/BAC closed at 70-bar lows, the g6 group's 10-day cumulative main flow is −$415.9M, and the group's 11-18 "+$8.6M inflow" headline was small-order funded while main money was −$26.3M.
+
+**Earnings event risk today (g5):** WMT and BABA both reported this morning and **both spiked then faded red pre-market** (WMT +1.8% → −1.06%; BABA +4.4% → −1.35%). WMT beat but its raised FY27 guidance midpoint sits below street; BABA's EPS comparison is basis-mismatched (adjusted RMB8.10 vs US-GAAP consensus 9.157 — do not call it a miss). All seven g5 names are red pre-market, five on thin volume. TJX's +8.05% earnings pop stands on **numbers nobody obtained** (EPS/margins/guidance missing — pull the 8-K). Semis carry their own event risk: breaking TSMC/Samsung China shipment-halt reports (second-hand FT/Reuters) and NVDA's CEO vacuum.
+
+**Breadth caution:** g1 notes defensives outperformed the Nasdaq-100 by 22.8pp over Oct+Nov-to-date (single-newsletter stat); 11-18 regular-session volume was below average almost everywhere (mega-caps 0.47–0.82x; only NVDA heavy at 1.40x on a down day). The bounce is pre-market, thin, and partly fading off early highs (MU, MSFT, META, TSLA, WMT, BABA).
+
+---
+
+## Group 1 — Index ETFs (QQQ, SPY, IWM)
+
+### News
+- Pre-market futures higher: S&P +1.15%, Dow +0.58%, VIX futures −1.57%, 10Y 5.100% (Dow Jones/MarketWatch 12:30Z); earlier 06:10Z snapshot NDX +0.97% / RTY +0.24% — the bid broadened/strengthened through the morning. QQQ's pre-market block (+1.97%) is stronger than the NDX futures move quoted in news (+0.97%) — unresolved discrepancy.
+- **Fed October minutes (hawkish):** held 3.75–4.00%; nearly all officials expect further tightening; a minority open to >25bp; Waller: 50bp in December if no January signal. GS cross-check: 25bp Dec + Mar, terminal 4.25–4.50%, third hike possibly pulled into January.
+- **Anthropic IPO** priced $83/share (~$81.3bn raise, ~$1.5tn fully diluted per one source; raise-size conflict noted above); lists today — QQQ-specific sentiment/flows event. Warren raised supervisory concerns.
+- Today's calendar: Philly Fed + initial claims 08:30 ET (landed as pass started — no read), leading indicators 10:00 ET. Earnings named: WMT, BABA, INTU, ROST.
+- Defensives (staples/healthcare/utilities) beat NDX by 22.8pp Oct+Nov MTD — approaching the largest two-month gap since 2001 per Kobeissi/Benzinga (single newsletter, not an index-provider figure).
+- SPY testing its 200-day MA ~730 (low-quality technical source); pre-market ~738.5 already above it. Positioning colour only.
+- **IWM: no fresh news found within 30 days** — newest relevant items 15 Oct (technical correction) and 24 Sep ($3.3bn weekly outflow), both stale. IWM trades off the rate path and today's data, not company news.
+
+### Money flow — PRIOR regular session Wed 2026-11-18
+| Symbol | Total net | Main (super+large) | Shape |
+|---|---|---|---|
+| QQQ | −$68.3M | −$134.1M | small +$87.9M buying, big selling |
+| SPY | −$282.9M | +$194.2M | super +$429.6M (3rd-best super day of 12); large/mid/small all negative |
+| IWM | +$111.7M | +$56.1M | all four buckets positive (2nd such day in 12); main-deal ratio 0.4581 = window high |
+
+- 12-session (11-03→11-18) cumulative main: QQQ **−$902.9M** (9/12 days negative) while small orders added +$1,802M; SPY +$23.9M (super the only positive bucket, +$463M); IWM −$182.1M.
+- **QQQ-vs-SPY super-large divergence:** 11-18 SPY super +429.6M vs QQQ super −21.8M — same index family, opposite big-money direction. Flow fact, not a call.
+- SPY 15:12 ET single minute +$259.3M super inflow (block/closing-index sized). Closing-bar revision caveat applies to all three (see caveats #5).
+- Today's pre-market tape is retail-sized (largest prints ~$200K QQQ / $148K SPY / $54K IWM); one anomalous QQQ print 162 sh @ 660.004 (~1.8% off market) — likely late/erroneous.
+
+### Signals (daily readings on 11-18 close; pre-market last ticks 08:32 ET)
+| Symbol | 11-18 close | Day | vs SMA10 / SMA20 | RSI14 | 5d / 20d | PM last | PM % |
+|---|---|---|---|---|---|---|---|
+| QQQ | 659.51 | +0.39% | −1.48% / −3.90% | 34.4 | −4.47% / −8.19% | 672.34 | +1.95% |
+| SPY | 730.20 | −0.31% | −1.92% / −3.12% | 34.7 | −3.90% / −4.73% | 738.48 | +1.13% |
+| IWM | 270.12 | +0.40% | −2.09% / −2.77% | 37.1 | −4.58% / −0.43% | 271.75 | +0.61% |
+
+- All three in daily downtrend; 11-18 was a stall, not a confirmed rebound (QQQ/IWM +0.4% on 0.88x/0.93x volume; SPY third straight down close, 11-18 low 726.795 = the 20-session low).
+- Common trigger day: **5 Nov** (QQQ −6.49%, SPY −4.41%, IWM −4.59%, all ~2–2.5x volume).
+- All three PM lasts above their 11-18 VWAP; QQQ is the only one above its SMA10 pre-market (still below SMA20 686.30). IWM PM levels least reliable (56,903 shares, 1–100-share prints).
+
+### Sentiment (titles-only, low confidence)
+- QQQ: direct ticker chatter effectively absent; proxy via Nasdaq/AI searches **bullish-leaning but hype-driven** — 10+ Anthropic-IPO posts in one morning, at least one promotional-sounding post. Noise-prone, not confirmation.
+- SPY: cautiously/grudgingly bullish; no panic; skepticism about the AI rally while participating. Small sample, some ambiguous titles.
+- IWM: mixed, improving (Oct bearish → two recent bullish-turn posts) but stale at the edges; nothing today. No evidence either way on small-cap participation in the AI bid.
+
+---
+
+## Group 2 — Semiconductors (NVDA, AMD, AVGO, TSM, MU)
+
+### News
+- **NVDA leadership vacuum (multi-source fact):** Jensen Huang resigned as CEO; board unanimously accepted, no intention to reinstating; CFO Colette Kress interim CEO. Successor search ongoing (Arm's Rene Haas approached; Lisa Su, Ian Buck, Johny Srouji, Matt Murphy named; Polymarket Haas 25%). The *stated cause* appears in one older secondary source only — **do not rely on it**. Reported board faction pushing Huang's return; retention pay rises + extra equity promised for December.
+- **NVDA FY27Q3 (17 Nov AMC) was a strong beat:** revenue $115.8bn +103% y/y (first >$100bn quarter), adj EPS $2.68 +111%, Q4 guide midpoint $130bn, FY28 growth target raised 70%→75%, cloud backlog $2.5tn (+$500bn q/q). Guidance excludes China datacentre revenue; **authorised Hopper shipments to China stopped** (Q3 China Hopper sales $2.4bn). Post-beat PT cuts (UBS →220, MS 267→260; GS 220, JPM 215→230, BofA 280 maintains) — multiple compression, not demand, is the argument. P/E reported at a decade low.
+- **Export controls:** BIS interim final rule (15 Nov) restricts remote access to advanced AI chips and tightens foundry/advanced-packaging limits; new licences for SE Asia exports. Jefferies estimates up to ~$44bn NVDA 2027 chip revenue at risk; UBS 1–2GW demand (long-term more than short-term); CLSA reads it as positive for domestic Chinese chains. **Breaking today (second-hand):** FT via Benzinga (10:29Z) and Reuters via MT Newswires (13:15Z) — TSMC and Samsung suspend some chip shipments to Chinese customers. Originals not opened.
+- **AMD +5.31% on 11-18: no dated catalyst found — unexplained.** CEO Lisa Su sold 70,000 shares 16 Nov at ~$507 (~$35.5M; Form 4/144, planned-sale notice; ~$73.2M cumulative since 18 Aug). Options: one call-skewed day after one put-skewed day; Jan-2027 $850 call block is lottery-shaped.
+- **AVGO:** GS maintains Buy, PT 540→460 (25x normalised $18 EPS); the note's core question is AI-spend durability to 2028 and competition with Google (MediaTek entering ASIC). TD Cowen Buy 475→425; Redburn downgraded Hold (PT raised 301→398). AVGO/NVDA price ratio +35.4% in the week to 13 Nov — largest weekly gap since 2009 listing; AVGO priced as the "no-key-person-risk" AI play (crowding risk). Next report date unconfirmed. GS note is an AI-generated summary with unreviewed disclaimer.
+- **TSM:** MS Overweight (2330.TW PT NT$3,088); 2nm capacity more than doubles next year; US power constraints not changing demand forecast; TeraFab discussions with Tesla. Vera Rubin in volume production on TSMC. **English-keyword news search failed twice (ret_code −5); coverage via Chinese keyword only — possible missed items.**
+- **MU:** RBC Buy $1,500 (18 Nov); all gathered items are bullish memory-cycle pricing/contract arguments (Sept–Oct, stale context); no negative MU catalyst found. Bridgewater 13F doubled MU shares (lagged, as-of 30 Sep). CHIPS Act buyback restriction lifts 9 Dec. Next earnings date not found.
+- Anthropic IPO is a sentiment/flows event for the whole AI complex; which of the five holds an Anthropic stake was not found (gap).
+
+### Money flow — PRIOR regular session Wed 2026-11-18
+| Symbol | Total net | Main shape | 12-session context |
+|---|---|---|---|
+| NVDA | **−$1,240.2M** | all four buckets negative | outflow 11 of 12 days; cumulative main −$6,873M; worse than the −$833M/day prior avg |
+| AMD | +$295.0M | all buckets positive, super-led +$90.5M (window best) | inflow 9/12; cumulative main +$426M; ~2.4x avg inflow |
+| AVGO | +$140.4M | small-led (+$75.4M); super+large only +$18M | choppy; 12-day main still −$143M |
+| TSM | −$104.7M | all buckets negative while price +0.81%; **super inflow exactly $0.00 (flagged)** | 8 of last 10 negative; ~3x avg outflow |
+| MU | −$55.5M | split (super −45.1 vs large +26.8) | 9/12 negative; cumulative main −$827M; milder than avg |
+
+- Clear 11-18 split: money IN AMD/AVGO, OUT NVDA/TSM, MU flat-mild-negative. NVDA's outflow is persistent distribution, not a one-day spike; late tape did not reverse it.
+- MU's notable move is outside the regular session: pre-market +4.4–4.5% on ~$536M turnover — no flow data exists for it yet.
+
+### Signals (11-18 close; PM verified live for NVDA/MU, snapshot for others)
+| Symbol | Close | Day | MA alignment | RSI14 | 20d | PM % |
+|---|---|---|---|---|---|---|
+| NVDA | 150.96 | −2.89% | below MA10 168.11 < MA20 189.04 | **15.8** (deeply oversold) | −28.86% | +1.78% (153.65) |
+| AMD | 530.14 | +5.31% | above MA10/20 but MA10<MA20 | 46.3 | +4.37% | +1.60% (538.62; overnight 546 higher — gave back) |
+| AVGO | 354.05 | +3.65% | **only bullish alignment** (354.05>332.23>332.07) | 52.3 | +9.53% | +2.50% (362.90) |
+| TSM | 362.62 | +0.81% | below MA10 382.70 < MA20 399.79 | 33.4 | −12.06% | +1.02% (366.34) |
+| MU | 705.27 | −1.00% | below MA10 732.94 < MA20 809.10 | 30.9 | −17.66% | **+4.40%** (736.35, faded from 749.20 high at 06:53) |
+
+- NVDA: 11 of last 14 sessions down; 11-18 volume 1.40x on a down close; open-to-close −5.17%, closed near the day low. Distance from 6-week highs: NVDA −36.4%, MU −35.2%, TSM −23.2%, AMD −17.9%, AVGO −6.0%.
+- Synchronized severe 6-week drawdown incl. 5 Nov one-day drops (NVDA −9.26%, AMD −17.26%, AVGO −10.43%, TSM −10.78%, MU −17.46%). News scout findings (leadership crisis + export rules + rotation) are the identified context; feed/adjustment fault not ruled out by candles alone — prices are forward-adjusted and far from public quotes (caveat #3).
+- MU is the only name whose pre-market high clearly faded; still the group's strongest gainer.
+
+### Sentiment (titles-only)
+- NVDA: **bearish on the tape, split on the story.** Minutes-old "Short"/"Keep shorting" cluster; expectation of another open-high-fade. One-sided bearish price chatter; bullish side silent in sample (survivorship of angry posts).
+- AMD: only 4 recent items, mildly bearish — contradicted by price. Bare "AMD" search returned no data. Do not build a view on 4 headlines.
+- AVGO: **near-zero usable coverage — data gap, not a neutral reading** ("博通" returned no data).
+- TSM: worst attribution in group — matches are generic market pessimism, not TSM-specific. Low confidence.
+- MU: bullish-leaning, memory-cycle driven, but with manipulation suspicion ("market-maker running it?") and consensus relative-strength status — classic hype pattern; the positive read is the least trustworthy in this file.
+
+---
+
+## Group 3 — Mega-cap tech/AI (AAPL, MSFT, GOOGL, AMZN, META, TSLA)
+
+### News
+- **Anthropic IPO** dominates the group frame: AMZN and GOOGL cited as shareholders; Nomura hypothesis (not fact) that IPO-funding selling caused the recent tech pullback and pressure may ease post-listing. Raise-size conflict ($81.3bn vs $94bn+) and an extreme unverified H1 loss figure ($80.7bn) — treat financials as reported, not confirmed.
+- **GOOGL +4.1% pre-market: NO confirmed symbol-specific catalyst — the biggest gap of the pass.** Anthropic-stake link is inference only. UBS initiates Hold $320 (PT now below the pre-market print); other houses maintain Buy $365–375. Quaise 50MW geothermal PPA (> $500m reported, from 2030) — immaterial to earnings, AI-power narrative only. Community claims of a "Gemini 4" release tonight are unverified hype.
+- **AMZN:** Jassy CNBC interview (strongest company-specific item today): AI demand "extremely strong"; most large 2027 compute already booked, substantial 2028 locked, meaningful 2029 bookings; AWS AI revenue >$25bn in three years; ~$220bn capex this year reaffirmed, significant increase next year. Company framing, no third-party validation. Blue Owl $513m CMBS on an Amazon-leased data centre (lease to 2041) — wire explicitly labels it rumour/unconfirmed. Form 144 filed 11-18 with no holder/size disclosed (gap).
+- **AAPL:** record valuation — 37x forward P/E (highest since 2007), PEG 5.3, price above average analyst target (only Mag-7 name with negative implied 12-month return per the article); ~28% of S&P's YTD gain from AAPL alone. Barclays maintains Underweight $261. Director Levinson sold 90,000 shares ~$31.8M (10b5-1 status unknown). Gross margin guided 47.9% → 45–46% on memory-chip costs. "iPhone Duo" foldable claim single-source, unverified.
+- **MSFT:** rating refresh all maintains Buy $610–680. Ignite recap: management attributes cancelled third-party orders to **vendor execution failures, not a demand/strategy shift** — company framing, unverified, and directly aimed at the market's "has AI infra demand peaked" worry. Viking 13F fully exited MSFT (as-of 30 Sep, ~7 weeks lagged).
+- **META:** no fresh catalyst found; +1.4% looks like the group bounce. UBS action **conflicting across sources** (initiated Buy $815 vs maintains Buy/cut PT to $815) — unresolved. Q3 spend figures don't reconcile across two ~4-week-old sources (background only). COO Olivan small 10b5-1 sale.
+- **TSLA:** Musk at DealBook reopened **Tesla–SpaceX merger talk — talk only**, no filing/timetable/terms; he supplied his own counterweight (shareholder vote needed, accretive mergers rare). Optimus "real demo" within ~2 months; wheel-free 6–7 passenger Model Y claim with no timeline/regulatory path. UBS initiates Hold $425. DEFA14A filed 11-18 — attachment not opened, content unknown. Viking 13F raised TSLA +327% (lagged).
+- Stale items explicitly filtered (year-old Redburn downgrade piece, Feb/Jul DOJ items) — dated in the source file so they cannot leak downstream.
+
+### Money flow — PRIOR regular session Wed 2026-11-18
+| Symbol | Total net | Main | Note |
+|---|---|---|---|
+| AAPL | −$81.9M | +$6.2M | 8th straight negative day; 12-day −$1,652.5M dominated by small-order selling (main only −$258.4M); mildest of the streak |
+| MSFT | −$26.6M | +$17.5M | quietest flows; main-deal ratio 18.8% = window low (retail/odd-lot heavy) |
+| GOOGL | **+$115.9M** | +$35.5M | best day of window, all four buckets positive — against 12-day cumulative main −$315.7M; ratio 26.7% window low |
+| AMZN | **−$110.1M** | +$21.7M | **price +3.82% vs net outflow — divergence**; −$121M swing in the last 60 min (mid/small); super still +23.7M |
+| META | +$21.7M | −$10.8M | small-led (+44.9M); window dominated by 4 Nov +$1,718.9M (main +926.9M, cause unchecked) |
+| TSLA | +$102.0M | +$37.5M | 2nd straight all-buckets-positive day; steady intraday build |
+
+- Closing-auction aggregates visible (AAPL $1,895.7M, MSFT $1,602.2M, AMZN $1,263.3M, TSLA $1,185.9M, GOOGL $1,042.6M, META $855.9M) — auction prints, not directional blocks.
+- MSFT pre-market change_val field inconsistent with price−close (flagged, not used).
+
+### Signals (11-18 close; pre-market 08:30 ET, extended-hours 5-min bars verified)
+| Symbol | Close | Day | PM % | Daily trend | 20d mom | 11-18 vol vs avg |
+|---|---|---|---|---|---|---|
+| AAPL | 352.45 | +0.15% | +0.47% | above MA10/20, <MA5 — constructive | +1.21% | 0.71x |
+| MSFT | 508.29 | +0.41% | +1.74% | **below all MAs — worst daily trend** | −2.45% | 0.79x |
+| GOOGL | 282.44 | +0.80% | **+4.12%** | below all; PM back AT MA20 294.77 (live test) | −12.89% | 0.65x |
+| AMZN | 267.74 | +3.82% | +2.06% | **above all MAs — clearest uptrend** | +6.93% | 0.82x |
+| META | 616.38 | −0.40% | +1.40% | below flat MA band ~625.2–625.4 (where PM faded) | −5.00% | **0.47x** |
+| TSLA | 383.72 | +0.95% | +1.85% | mixed; PM reclaiming MA5/MA20 | +2.44% | 0.72x |
+
+- All six green pre-market; MSFT/AMZN/META/TSLA partly fading off early highs into 08:30. Every symbol traded below its 20-day average volume on 11-18 (0.47–0.82x). GOOGL's 20d −12.89% reflects the post-10-29 earnings crash; AMZN cleared its 11-18 high 268.29 and the 20-day range top.
+
+### Sentiment (titles-only; weakest tool coverage of the pass)
+- GOOGL: **most one-sided bullish, hype-heavy** — "gemini-4-krypton tonight", "Google about to take over Nvidia" (likely exaggeration), Bloom Energy deal. Bullish chatter + strongest PM gain = news may already be priced; sentiment argues against chasing, not for it.
+- AAPL: zero fresh name-specific posts — silence is a data gap, not bullishness.
+- MSFT: mixed/cautious sector-level chatter vs firm tape — sentiment and tape disagree.
+- AMZN: **silent while price is loud** (+3.8% then +2.1% with almost no name-specific chatter) — coverage gap, not calm agreement.
+- META: weakest coverage (~3 usable items; bare "META" returned no data) — near-zero information.
+- TSLA: most explicit bearish chatter in 48h ("fully short with my whole account") vs firm tape; crowd flipped from October "$400" bullish topics within three weeks — fickle, high-noise.
+
+---
+
+## Group 4 — Healthcare (LLY, UNH, JNJ, ABBV, MRK)
+
+### News
+- **UNH −10.21% to 349.91 (11-18), worst DJIA name:** Sen. Warren publicly calling for break-up of large health groups (UNH/CVS/Cigna named); federal regulators proposed stricter medical-fraud controls. Headline-driven regulatory repricing, not legislation. Dow Jones reported −13.75% over two sessions; signals scout computes −15.1% from closes (412.02→389.68→349.91). No UNH response or 18/19-Nov rating change found (gap).
+- **LLY −2.32%: decline UNEXPLAINED by gathered news.** Sell-side uniformly constructive: BMO/Citi Buy $1,650, RBC Buy $1,600, Barclays Buy raised $1,400→$1,550 (16–19 Nov) — still ~12% above the close, so not a rating-driven move.
+- **JNJ (fresh today 13:05Z):** CAPLYTA (lumateperone) sNDA filed for bipolar I mania — **a filing, not an approval**; two positive Phase 3 trials; would be 5th adult indication. Ollin deal (up to $3.325bn) absorbed without a price signal.
+- **ABBV (fresh today 08:37Z):** Disco Pharmaceuticals collaboration up to $2.54bn — **only $40m upfront**, early-stage option deal, normally a small sentiment-level catalyst. Piper Buy PT $349 (~+22%).
+- **MRK −3.90%:** nemtabrutinib (MK-1026) discontinued after safety review; BELLWAVE Phase 3 programme terminated — writes off a chunk of the ~$6.7bn Terns deal. Announced Tue 17 Nov but the bigger drop came Wed 18 Nov — **partly unexplained**; the 8-K (11-18 21:29Z) was not opened.
+
+### Money flow — PRIOR regular session Wed 2026-11-18
+| Symbol | Total net | Main | Note |
+|---|---|---|---|
+| UNH | **−$127.6M** | −$99.6M | −$170.2M swing vs prior day (+42.6M); main-driven |
+| LLY | −$110.4M | −$18.7M | **NOT main-driven** (small+mid −$91.7M); largest outflow since 11-05; super-bucket exact zeros flagged as data gap |
+| ABBV | −$31.1M | −$19.9M | first sizable main outflow since 11-11 (super −$13.1M, window's largest super-day) |
+| MRK | −$9.3M | −$15.1M | institutions selling into retail bid (small +$5.4M) on a −3.9% close |
+| JNJ | +$5.0M | −$5.0M | **flows NORMAL** despite the −2.15% close; no flow signal stands out |
+
+### Signals (11-18 close; pre-market ~08:30 ET)
+| Symbol | Close | Day | RSI14 | Vol vs 20d | PM |
+|---|---|---|---|---|---|
+| UNH | 349.91 | **−10.21%** | 32.8 | **3.09x** | 349.93 **+0.01%** — stabilizing, holding above 342.455 intraday low |
+| LLY | 1,382.75 | −2.32% | 58.5 (group highest) | 0.94x | 1,371.14 **−0.84%** on unusually heavy ~$332M (240,143 sh) — new low |
+| JNJ | 272.70 | −2.15% | — | — | −0.77% — new low |
+| ABBV | 286.01 | −2.33% | — | — | −0.82% — new low |
+| MRK | 137.78 | −3.90% | 39.0 | 1.03x | 137.07 −0.51% — below 136.79 support → new low |
+
+- UNH: two consecutive down days totalling −15.1%; below MA5/10/20 with the widest gap in group; 11-18 close = fresh 30-day low; the only name whose drop came on well-above-normal volume.
+- LLY: 4th straight down close; below MA5/MA10 but still above MA20 (+0.35%) — the least broken chart of the group.
+- MRK: below all MAs (−5.41% vs MA20); 30-day low; three of last four closes lower.
+
+### Sentiment — STALE, not a usable edge
+- **Freshest name-specific chatter: UNH 2026-11-04; LLY 10-28, JNJ 10-29, ABBV 10-29, MRK 10-28.** All five went quiet BEFORE the 18 Nov sell-off — the record predate the drop and could easily mislead a bull/bear read. Sector searches are live (items to 11-19 ~11:30Z), so this is name-level silence, not a dead index.
+- Only fresh, high-confidence sentiment is **sector-level and negative**: regulation/pricing threat ("healthcare stocks hit by regulation", 11-19 07:31Z) + GLP-1 competition + an unverified safety headline — consistent with the 18 Nov price action.
+- Do not read "quiet" as "consensus".
+
+---
+
+## Group 5 — Earnings / consumer retail (WMT, BABA, HD, TGT, LOW, DIS, TJX)
+
+### News — two live reports today, both popped then faded
+- **WMT (reported today pre-open):** adj EPS $0.65 vs $0.64 consensus; revenue $188.8B +5.2% vs ~$187.4B expected. FY27 adj EPS guide raised to $2.84–2.89 (from $2.80–2.87) — **but street was already at $2.89, so the new midpoint $2.865 sits BELOW consensus.** Clean beat-and-raise on the headline; the raise is smaller than the buy-side carried. Holiday/traffic commentary is fresh read-through input for TGT/LOW/HD/TJX.
+- **BABA (reported today):** adj EPS per ADS **RMB 8.10** vs a Futu preview consensus of **RMB 9.157 on a US-GAAP basis — BASIS MISMATCH; do not call this a miss** until the 6-K GAAP figure is pulled. Revenue RMB271.519B +10%; cloud external commercialisation +64%, AI-related cloud +53%, margin 14.5%; the "+260% EBITA" wire figure looks garbled/unreliable. Context: ADS closed at a YTD low 17 Nov; FY27Q1 capex RMB67.678B with FCF negative.
+- **HD (17 Nov):** beat; comps +2.2%. **Guidance direction CONFLICT between wires** (智通: raised to top of range; MT: lowered) — unresolved, needs HD's own 8-K. CEO McPhail replaces Decker effective 23 Nov (inside competition week).
+- **TGT (18 Nov):** comps +5.6%; EPS $2.65 includes $0.50 tariff refunds (ex-refund $2.15 vs $2.07 consensus). +7.7% intraday → +4.01% close.
+- **LOW (18 Nov):** comps +1.8%; EPS $3.10 includes $0.34 refunds; **margin guide CUT, EPS guide held $12.25**; full gap-fill close-at-high reversal +1.05% (strongest candle of the group). Analyst day 9 Dec.
+- **DIS (17 Nov):** adj EPS $1.77 vs ~$1.68; revenue $25.95B +16%; streaming OI $824M (doubled) BUT disclosure ends after FY27Q1. +4.64% day-attribution (17 vs 18 Nov) unresolved. Avengers: Doomsday 18 Dec.
+- **TJX (18 Nov):** comps +4% vs 3.8% expected; **+8.05% — the biggest move of the group — but reported EPS, margins and guidance were NOT OBTAINED. Highest-priority gap: pull the 8-K/press release before using any TJX number.**
+- Cross-cutting: **tariff refunds are a common EPS trap** (LOW guided net-neutral FY effect); NAHB housing index 25 from 29; Oct retail sales +0.2%.
+
+### Money flow — PRIOR regular session Wed 2026-11-18
+- **TGT: −$40.70M net on a +4.01% day — the group's biggest price/flow divergence**, with the window's highest big-money share (main_deal_ratio 0.402).
+- **DIS: −$19.30M first negative total day of the window while super-large printed a window-best +$16.42M; 5-day main +$39.1M remains the group's best cumulative big-money accumulation.**
+- **TJX: +$6.41M total, main +$13.16M = window-best main inflow on the print day** (super +$11.76M) — but built on a week of outflow; the prior day's +$70.3M was 94% small-order (pre-earnings position-building in small orders; small sold −$6.96M on the print while super bought).
+- WMT/BABA/HD/LOW: see state/scout-moneyflow-g5.md for per-bucket detail (no standout divergence flagged beyond the above).
+
+### Signals (pre-market ~08:30 ET; ALL SEVEN RED, five on thin volume)
+| Symbol | 11-18 close | PM last | PM % | Key readings |
+|---|---|---|---|---|
+| WMT | 127.36 | 126.01 | −1.06% | spiked to 129.71 (+1.8%) then faded; PM turnover $210.9M; RSI 67.6; above SMA10/20 |
+| BABA | 84.37 (20-day low) | 83.24 | −1.35% | high 88.08 (+4.4%) fully given back; RSI **25.1**; −15% below SMA20; weakest trend (ROC5 −16.89%) |
+| HD | — | — | −0.96% | thin |
+| TGT | — | ~165.84 | — | **ANOMALY: one 08:20 ET bar 400,134 sh / $66.39M ≈ 98% of PM volume**, price marked to 164.50 then recovered; venue unknown |
+| LOW | 222.78 | 222.19 | −0.26% | PM high 227.49 is a bad print on 1,589 sh; real PM range 220.00–222.50 |
+| DIS | 122.36-area 20d high | — | ~−0.5% | RSI **71.5** at 20-day close high — most stretched; no new volume behind it |
+| TJX | 140.30 (+8.05%) | — | red, thin | 11-18 amplitude 7.94%, turnover $2.552B |
+
+- Momentum extremes: BABA weakest (RSI 25.1), DIS most stretched (RSI 71.5); TJX/LOW/TGT each rebuilt one large candle on 1.5–2.8x volume then went flat-to-down in thin pre-market.
+
+### Sentiment (titles-only)
+- BABA: hype-heavy around the print with possible spam/promotional content (flagged in source file) — low trust.
+- **TJX: no post dedicated to the actual 18 Nov numbers found** — an +8.05% day with no discoverable community discussion is an anomaly; "no posts" ≠ "no one positioned".
+- LOW: zero sentiment posts found (gap).
+- Standing community model for the group: "trade-down winners" (WMT/TJX/DLTR/DG) — which is why the TJX pop fits the narrative even without numbers.
+
+---
+
+## Group 6 — Financials (JPM, BAC, GS, V, MA)
+
+### News
+- **Macro regime: Fed HIKING cycle.** Oct CPI +0.4% (hot); Dec +25bp >95% priced; DB sees 3 hikes to 4.50–4.75%; 10Y >5.0–5.1%, DXY ~103. GS's own 2027 outlook: Dec + Mar hikes. Direct headwind for the group's rate-sensitive names.
+- **JPM:** no company-specific news found in 4 weeks. OCC debanking review names JPM/BAC. 16 Nov bank IT outage — JPM says technical, not cyber.
+- **BAC:** Berkshire 13F top sell (−5.7%, lagged as-of 30 Sep); RBC maintains Buy $60 (fresh, ~10h before run — a large stated gap vs 48.91, maintained not new).
+- **GS:** RBC maintains Neutral $1,010 (only Neutral among fresh wires); no news found to explain the +1.8% pre-market bid. Repo-seizure tail-risk note; Pasquariello: hedge funds sold AI fastest in 5+ years.
+- **V:** **$38bn interchange settlement — Judge Cogan made NO decision on 17 Nov; the ruling is a binary event for V/MA.** ChatGPT Wallet launched 11-13 with V/MA/Amex (Bernstein PTs V $486 / MA $764; agentic volume currently negligible).
+- **MA:** Temu MOU signed 11-18 — **non-binding**. Wells Fargo maintains Buy $731 (16 Nov).
+
+### Money flow — PRIOR regular session Wed 2026-11-18
+| Symbol | Total net | Main | Note |
+|---|---|---|---|
+| JPM | +$23.0M | **+$4.49M** | first positive main day (10-session); retail-funded (small +$25.5M); +1.3 sd vs window |
+| BAC | **−$41.0M** | −$20.9M | **ALL four buckets outflow — most one-sided distribution day in group**; ratio 0.3602 near window max |
+| GS | +$27.3M | +$0.94M | inflow dominated by small (+$28.9M); ratio 0.1673 = window min |
+| V | +$24.1M | −$6.2M | mid-led (+$28.3M); **zero recorded super-order buy turnover** |
+| MA | −$24.7M | −$4.7M | super +$4.8M (2nd-best super day) but big −$9.5M; 4th-worst total of 10 |
+
+- **Group 10-session (11-05→18) cumulative main: −$415.9M** (JPM −90.0, BAC −116.3, GS **+46.9 the only positive**, V **−153.1 heaviest**, MA −103.4).
+- Group 11-18 headline "inflow" +$8.6M is **small-order funded (+$29.9M) while main was −$26.3M** — three of five names print positive totals with flat-to-negative main money.
+- MA big-bucket negative in all 10 sessions; 9/10 main-negative.
+
+### Signals (11-18 close; pre-market 05:15–08:30 ET)
+| Symbol | Close | Day | RSI14 | Trend | PM % |
+|---|---|---|---|---|---|
+| JPM | 324.11 | −1.77% | 37.9 | **lowest close in 70-bar window**; 3 straight down days; −4.24% below SMA20, −4.37% below SMA50 | +1.00% (thin) |
+| BAC | 48.91 | −1.07% | 34.9 | **70-bar closing low**; −8.21% below SMA50 (furthest in group); MACD hist first positive (easing) | +0.86% |
+| GS | 873.18 | −0.49% | 42.4 | below SMA20/50; **ATR 3.48% = highest vol in group**; only name at/above session VWAP | +1.81% — **ANOMALY: single 08:30 ET bar 147,522 sh / $128.8M = 98.5% of PM volume; block or artefact — do not build on it** |
+| V | 415.22 | −0.37% | 53.2 | **uptrend intact**: +5.57% above SMA50, −0.62% below SMA20; 20d +1.81% | −0.21% |
+| MA | 643.37 | −0.37% | — | exactly on SMA20; above SMA50 | **−0.83% weakest**; testing 636.39–637.10 support shelf now; next 623.6/605 |
+
+- Trend split: JPM/BAC/GS below both SMA20 and SMA50 at/near 70-bar closing lows (JPM/BAC at exact lows); V/MA above SMA50, only ~0.2–0.6% below SMA20.
+
+### Sentiment (titles-only)
+- Coverage quality: GS (moderate) > JPM ≈ V (thin) > **BAC ≈ MA (no usable signal — gap, not neutral)**.
+- GS: AI-dealmaking skepticism threads. Hawkish community claims on rates are unverified. V level-talk ("tonight 413") has gone stale against price.
+
+---
+
+## Missing / stale / unresolved — consolidated flag list
+
+**No-output scouts: none (24/24 reported).**
+
+Highest-priority gaps:
+1. **TJX earnings detail (EPS/margins/guidance) not obtained** — pull the 8-K before using the +8.05% move (g5).
+2. **GOOGL +4.1% pre-market: no confirmed catalyst** (g3). AMD +5.31% on 11-18 also unexplained (g2). LLY −2.32% unexplained by news (g4).
+3. **HD guidance direction: two wires disagree** — needs HD's 8-K (g5).
+4. **BABA EPS basis mismatch** (adjusted RMB8.10 vs US-GAAP 9.157 consensus) — needs the 6-K; "+260% EBITA" garbled (g5).
+5. **V/MA interchange settlement ruling: no decision yet — binary pending** (g6).
+6. **08:30 ET Philly Fed + claims: no scout read** (landed as pass started) (g1).
+7. **MRK 8-K (11-18) not opened**; drop partly unexplained vs announcement timing (g4). TSLA DEFA14A and AMZN Form 144 attachments not opened (g3).
+
+Data anomalies (reported, not interpreted):
+- GS pre-market single bar = 98.5% of PM volume; TGT single bar ≈ 98% of PM volume; LOW 227.49 high on 1,589 sh; QQQ 660.004 off-market print; TSM super inflow exactly $0.00; LLY super-bucket exact zeros; g1 closing-bar flow revisions; MSFT pre-market % field inconsistency.
+
+Stale / thin coverage:
+- g4 sentiment: freshest name-specific 11-04 (UNH) — pre-selloff, unusable as a current read.
+- g2 sentiment: AVGO near-zero, AMD 4 items, TSM unattributable. g3 sentiment: AAPL/AMZN silent, META ~3 items. g6 sentiment: BAC/MA zero usable. g5 sentiment: TJX/LOW zero dedicated posts.
+- IWM news: nothing fresh within 30 days. TSM English-keyword news pass failed (Chinese-only coverage).
+- Unverified single-source figures: 10Y ~5.1%; Anthropic raise size ($81.3bn vs $94bn+) and $80.7bn H1 loss; AAPL "iPhone Duo"; Jassy "440x" comparison; NVDA resignation cause (do not rely).
+- Source conflicts left unresolved on purpose: UBS/META initiate-vs-maintain; Anthropic raise size; HD guidance direction; DIS +4.64% day-attribution (17 vs 18 Nov).
+- 13F items (Bridgewater, Viking, Berkshire) are as-of 30 Sep — lagged disclosures, not current positioning.
+- Forward-adjusted kline prices differ from public quotes (caveat #3); re-check notional at the open.
+
+---
+
+*Gather-only compilation. No ranking, no trade proposal, no decision, no orders placed. Account 5830109 untouched. All 24 source outputs preserved verbatim in state/scout-<job>-g<group>.md.*
