@@ -48,19 +48,32 @@
       linear-gradient(to bottom,rgba(31,27,22,.04) 1px,transparent 1px);
     background-size:56px 56px;
   }
-  .wrap{max-width:1240px;margin:0 auto;padding:24px 48px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+  .wrap{max-width:1240px;margin:0 auto;padding:20px 48px 20px;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start}
 
-  header{display:flex;align-items:baseline;gap:28px;margin-bottom:18px;flex-wrap:wrap}
+  header{display:flex;align-items:baseline;gap:24px;margin-bottom:10px;flex-wrap:wrap}
   .wordmark{font-size:24px;font-weight:500;letter-spacing:-.01em}
   nav{display:flex;gap:22px;font-size:18px}
   nav a{color:var(--sec);text-decoration:none;padding-bottom:3px}
   nav a.on{color:var(--ink);border-bottom:1.5px solid var(--ink)}
   nav a:hover{color:var(--ink)}
-  .livenote{margin-left:auto;font-size:17px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sec)}
+  .clock{margin-left:auto;font-size:17px;font-weight:500;color:var(--sec);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .clock b{color:var(--ink);font-weight:600}
+  .livenote{font-size:17px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--sec);white-space:nowrap}
+
+  .ticker{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;padding:12px 20px;background:var(--card);border:1px solid var(--hair);border-radius:12px;margin-bottom:12px;font-size:17px;box-shadow:0 6px 18px rgba(31,27,22,.05)}
+  #tickItems{display:contents}
+  .ticker .item{display:flex;gap:8px;align-items:baseline;white-space:nowrap}
+  .ticker .sym{font-weight:600}
+  .ticker .price,.ticker .chg{font-variant-numeric:tabular-nums}
+  .ticker .chg{font-weight:500}
+  .ticker .basis{color:var(--sec)}
+  .ticker .noq{color:var(--sec)}
+  .ticker .mood{margin-left:auto;white-space:nowrap;color:var(--sec)}
+  .ticker .mood b{color:var(--ink);font-weight:600}
 
   .card{
     background:var(--card);border:1px solid var(--hair);border-radius:16px;
-    box-shadow:0 10px 28px rgba(31,27,22,.07);padding:32px;
+    box-shadow:0 10px 28px rgba(31,27,22,.07);padding:20px 26px;
   }
   .label{font-size:17px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sec)}
   .fig{font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.05}
@@ -74,19 +87,20 @@
   .verdict{font-size:38px;font-weight:300;letter-spacing:-.02em;line-height:1.12}
   .nodata{font-size:32px;font-weight:300;letter-spacing:-.01em;line-height:1.15}
 
-  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;margin-bottom:18px}
-  .hero .fig.big{font-size:76px;margin:6px 0 10px}
-  .hero .fig.mid{font-size:56px;margin:6px 0 8px}
-  .spark{display:block;width:100%;height:36px;margin:0 0 6px}
-  .hero .right{border-left:1px solid var(--hair);padding-left:40px;display:flex;flex-direction:column}
-  .hero .right .meta{margin-top:auto;padding-top:12px}
+  #accountCard .fig.big{font-size:52px;margin:6px 0 8px}
+  #accountCard .todayline{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+  #accountCard .fig.mid{font-size:32px}
+  .spark{display:block;width:100%;height:46px;margin:6px 0 4px}
 
-  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .row .card{display:flex;flex-direction:column;gap:8px}
+  .row{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-bottom:12px}
+  .row:last-of-type{margin-bottom:0}
+  .row .card{display:flex;flex-direction:column;gap:6px}
   .row .meta{margin-top:auto;padding-top:4px}
   .readlink{font-size:18px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair);align-self:flex-start;padding-bottom:2px}
   .readlink:hover{border-bottom-color:var(--ink)}
   .summary{font-size:28px;font-weight:300;letter-spacing:-.01em;line-height:1.2}
+  .why{margin-top:2px;padding:12px 14px;border:1px dashed var(--hair);border-radius:10px;background:rgba(255,255,255,.5);font-size:17px;line-height:1.45;color:var(--sec)}
+  .why b{color:var(--ink);font-weight:600}
 
   .counts{font-size:19px;line-height:1.4;font-variant-numeric:tabular-nums}
   .trades{display:flex;flex-direction:column;gap:8px;margin-top:2px}
@@ -128,15 +142,15 @@
   /* phone: one column, same words, same honesty */
   @media (max-width:900px){
     .wrap{padding:20px 16px;justify-content:flex-start}
-    .hero{grid-template-columns:1fr;gap:20px}
-    .hero .right{border-left:0;padding-left:0;border-top:1px solid var(--hair);padding-top:20px}
-    .hero .fig.big{font-size:48px}
-    .hero .fig.mid{font-size:40px}
+    .clock{margin-left:0;width:100%;order:3}
+    .ticker .mood{margin-left:0;width:100%;white-space:normal}
+    #accountCard .fig.big{font-size:36px}
+    #accountCard .fig.mid{font-size:26px}
     .row{grid-template-columns:1fr}
-    .card{padding:24px}
+    .card{padding:22px}
     .verdict{font-size:32px}
     .nodata{font-size:28px}
-    .livenote{margin-left:0;width:100%}
+    .livenote{white-space:normal}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -150,29 +164,30 @@
       <a class="on" href="index.html">Today</a>
       <a href="team.html">Team</a>
     </nav>
-    <div class="livenote" id="livenote">Live · read-only</div>
+    <div class="clock" id="clock">Singapore time</div>
   </header>
 
-  <!-- Card 1: account value + today -->
-  <section class="card hero">
-    <div class="left">
-      <div class="label">Account value</div>
-      <div class="fig big" id="equity">No live data</div>
-      <svg class="spark" id="spark" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true" hidden>
-        <polyline id="sparkline" fill="none" stroke="#2E7D5B" stroke-width="2" points=""/>
-      </svg>
-      <div class="term" id="sparknote">Today's account value, minute by minute.</div>
-      <div class="term">Paper account = practice money, not real cash.</div>
-    </div>
-    <div class="right">
-      <div class="label">Today</div>
-      <div class="fig mid" id="pnl">No live data</div>
-      <div class="sentence">What the account made or lost since yesterday's close.</div>
-      <div class="meta" id="acctMeta">moomoo paper account · waiting for the feed</div>
-    </div>
-  </section>
+  <!-- ticker: honest live quotes + the scouts' mood; livenote says what is live -->
+  <div class="ticker" id="ticker">
+    <span class="livenote" id="livenote">Live · read-only</span>
+    <span id="tickItems"><span class="noq">No live quotes yet</span></span>
+    <span class="mood" id="mood">Market mood: <b>not yet</b></span>
+  </div>
 
   <div class="row">
+    <!-- Card 1: account value + today + spark -->
+    <section class="card" id="accountCard">
+      <div class="label">Account value</div>
+      <div class="fig big" id="equity">No live data</div>
+      <div class="todayline"><span class="label">Today</span><span class="fig mid" id="pnl">No live data</span></div>
+      <div class="term">What the account made or lost since yesterday's close. Paper account = practice money, not real cash.</div>
+      <svg class="spark" id="spark" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true" hidden>
+        <polyline id="sparkline" fill="none" stroke="#2E7D5B" stroke-width="2" vector-effect="non-scaling-stroke" points=""/>
+      </svg>
+      <div class="term" id="sparknote">Today's account value, minute by minute.</div>
+      <div class="meta" id="acctMeta">moomoo paper account · waiting for the feed</div>
+    </section>
+
     <!-- Card 2: tonight's trades (several per night) + night timeline -->
     <section class="card" id="tradeCard">
       <div class="label">Tonight's trade</div>
@@ -195,7 +210,9 @@
       <div class="term">The night, open to close. Dot = now.</div>
       <div class="meta" id="tradeMeta">waiting for the feed</div>
     </section>
+  </div>
 
+  <div class="row">
     <!-- Card 3: robot health + check-in strip (advances only on real check-ins) -->
     <section class="card" id="robotCard">
       <div class="label">Robot</div>
@@ -213,6 +230,7 @@
       <div class="label">Pre-market report</div>
       <div class="summary" id="reportVerdict">No live data</div>
       <div class="sentence" id="reportSentence">The report feed has not delivered tonight's report, so nothing is shown rather than a guess.</div>
+      <div class="why" id="reportWhy" hidden></div>
       <div class="term" id="reportTerm">Scouts = 24 research robots in six groups that read news and mood before the open.</div>
       <a class="readlink" id="reportLink" href="data/report.txt" target="_blank" rel="noopener" hidden>Read the full report →</a>
       <div class="meta" id="reportMeta">Compiles 22:00 SGT, before the open, each trading day</div>
@@ -232,6 +250,8 @@ var S = null;                 // last /api/live snapshot
 var HIST = [];                // equity history points (orchestrator-appended)
 var REPORT = null;
 var PUSHED = null;
+var QUOTES = null;            // last /api/quotes (read-only quotes poller)
+var SENT = null;              // last /api/sentiment (scouts' dominant-mood lines)
 var SESSION = { open: null, close: null, es: null, ee: null };  // ms UTC
 var LAST_STRIP_KEY = "";      // strip re-renders only when check-ins change
 
@@ -253,6 +273,39 @@ function ageStr(ts){
 }
 function sgtHM(ts){ return new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Singapore",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date(ts)); }
 function $(id){ return document.getElementById(id); }
+
+/* ---------- header clock: real Singapore date + time, ticks every second ---------- */
+function tickClock(){
+  var now = new Date();
+  var d = new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Singapore",weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(now);
+  var t = new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Singapore",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(now);
+  $("clock").innerHTML = esc(d)+" · <b>"+esc(t)+"</b> SGT";
+}
+
+/* ---------- ticker: quotes + mood, every figure from a real read ---------- */
+function renderTicker(){
+  var box = $("tickItems"), mood = $("mood");
+  if (!QUOTES || !QUOTES.available){
+    box.innerHTML = '<span class="noq">No live quotes yet · the quotes poller writes every ~30s</span>';
+  } else {
+    var age = QUOTES.ts_utc ? (Date.now()-Date.parse(QUOTES.ts_utc))/1000 : null;
+    var stale = age!=null && age>90;
+    var basisWord = { pre:"pre-market", regular:"live", after:"after-hours", overnight:"overnight", "last close":"last close" };
+    box.innerHTML = QUOTES.items.map(function(it){
+      var chg = it.chg_pct==null ? "" : '<span class="chg '+(it.chg_pct>=0?"gain":"loss")+'">'+(it.chg_pct>=0?"+":"−")+Math.abs(it.chg_pct).toFixed(2)+'%</span>';
+      return '<span class="item"><span class="sym">'+esc(it.symbol)+'</span><span class="price">$'+Number(it.price).toFixed(2)+'</span>'+chg+'<span class="basis">'+esc(basisWord[it.basis]||it.basis)+'</span></span>';
+    }).join("") + (stale
+      ? '<span class="noq"><span class="staleword">STALE</span> · quotes '+esc(ageStr(QUOTES.ts_utc))+'</span>'
+      : '<span class="basis">quotes '+esc(ageStr(QUOTES.ts_utc))+'</span>');
+  }
+  if (!SENT || !SENT.available){
+    mood.innerHTML = 'Market mood: <b>not yet</b> · scouts write it at 21:30 SGT';
+    mood.title = "";
+  } else {
+    mood.innerHTML = 'Market mood: <b>'+esc(SENT.word)+'</b> · scouts\u2019 sentiment pass · '+SENT.groups_in+' of '+SENT.groups_total+' groups';
+    mood.title = SENT.mood_lines+" dominant-mood lines tallied: "+SENT.tally.bullish+" bullish · "+SENT.tally.bearish+" bearish · "+SENT.tally.cautious+" cautious · "+SENT.tally.mixed+" mixed. Ties read Mixed.";
+  }
+}
 
 /* ---------- session times from the bridge (tonight, real) ---------- */
 function setSession(t){
@@ -311,7 +364,7 @@ function renderSpark(){
 
 /* ---------- card 2: several trades, one line each ---------- */
 function optName(sym){
-  var m = String(sym||"").match(/^US\.([A-Z]+)(\d{6})([CP])(\d+)$/);
+  var m = String(sym||"").match(/^(?:US\.)?([A-Z]+)(\d{6})([CP])(\d+)$/);
   if (!m) return { label: String(sym||"").replace("US.","") + " shares", kind: null, mult: 1 };
   var strike = Number(m[4])/1000;
   var mon = Number(m[2].slice(2,4)), day = Number(m[2].slice(4,6));
@@ -500,20 +553,56 @@ function renderRobot(){
 }
 function fmtAgeS(s){ s=Math.round(s); return s<60 ? s+"s ago" : s<3600 ? Math.floor(s/60)+" min ago" : Math.floor(s/3600)+"h "+Math.floor((s%3600)/60)+"m ago"; }
 
-/* ---------- card 4: report ---------- */
+/* ---------- card 4: report — honest compile state, never a guess ---------- */
 function renderReport(){
   var r = REPORT;
-  var verd = $("reportVerdict"), sent = $("reportSentence"), link = $("reportLink"), meta = $("reportMeta");
-  if (!r || !r.exists){
-    verd.textContent = "Not compiled yet"; verd.className = "summary";
-    sent.textContent = "The report compiles at 22:00 SGT, before the open. Nothing is shown rather than a guess.";
-    link.hidden = true;
+  var verd = $("reportVerdict"), sent = $("reportSentence"), link = $("reportLink"), meta = $("reportMeta"), why = $("reportWhy");
+  var c = r && r.compile;
+  if (!r){
+    verd.textContent = "No live data"; verd.className = "summary";
+    sent.textContent = "The report feed has not delivered tonight's report, so nothing is shown rather than a guess.";
+    link.hidden = true; why.hidden = true;
+    $("reportTerm").hidden = true;
     meta.textContent = "Compiles 22:00 SGT, before the open, each trading day · Journal";
+    return;
+  }
+  if (!r.exists){
+    link.hidden = true;
+    $("reportTerm").hidden = true;   // the compiling sentence already explains the scouts
+    if (c && c.state==="compiling"){
+      var el = Math.max(1, Math.round((Date.now()-Date.parse(c.started_utc))/60000));
+      verd.textContent = "Compiling now"; verd.className = "summary caution";
+      sent.textContent = "Started 22:00 SGT · gathering the 24 scouts' news, flows, signals and mood, then writing one report.";
+      why.hidden = false;
+      why.innerHTML = "<b>Why nothing yet:</b> the compile started 22:00 SGT and is still running (about "+el+" min). The report lands here the moment the file exists — never a guess.";
+      meta.textContent = "Journal · state/premarket-report-"+r.date+".md · elapsed "+el+"m";
+    } else if (c && c.state==="countdown"){
+      var m = Math.max(1, Math.ceil((Date.parse(c.starts_utc)-Date.now())/60000));
+      var mw = m>=60 ? Math.floor(m/60)+"h "+(m%60)+"m" : m+" min";
+      verd.textContent = "Not compiled yet"; verd.className = "summary";
+      sent.textContent = "The report compiles at 22:00 SGT, before the open. Nothing is shown rather than a guess.";
+      why.hidden = false;
+      why.innerHTML = "<b>Why nothing yet:</b> today's compile starts at 22:00 SGT — in about "+mw+". The report appears here the moment the file lands.";
+      meta.textContent = "Compiles 22:00 SGT, before the open, each trading day · Journal";
+    } else {
+      verd.textContent = "Not compiled yet"; verd.className = "summary";
+      sent.textContent = "The report compiles at 22:00 SGT on trading days. Nothing is shown rather than a guess.";
+      why.hidden = false;
+      why.innerHTML = "<b>Why nothing yet:</b> "+esc(c && c.note ? c.note : "No compile is scheduled right now.");
+      meta.textContent = "Compiles 22:00 SGT, Mon–Fri · Journal";
+    }
     return;
   }
   verd.textContent = r.verdict || "Report ready."; verd.className = "summary";
   sent.textContent = r.line || "The full report lists what each scout group found.";
   link.hidden = false;
+  $("reportTerm").hidden = false;
+  if (!r.is_today && c && (c.state==="compiling" || c.state==="countdown")){
+    why.hidden = false;
+    why.innerHTML = c.state==="compiling"
+      ? "<b>This is yesterday's report.</b> Today's compile started 22:00 SGT and is still running (about "+Math.max(1,Math.round((Date.now()-Date.parse(c.started_utc))/60000))+" min). It replaces this the moment the file lands."
+      : "<b>This is yesterday's report.</b> Today's compiles at 22:00 SGT.";
+  } else { why.hidden = true; }
   meta.innerHTML = "Journal · " + (r.ts_utc ? esc(ageStr(r.ts_utc)) : "age unknown");
 }
 
@@ -526,7 +615,7 @@ function renderNote(){
 
 function applyAll(){
   if (S) setSession(S.trade);
-  renderAccount(); renderTrade(); renderRobot(); renderReport(); renderNote();
+  renderAccount(); renderTrade(); renderRobot(); renderReport(); renderNote(); renderTicker();
 }
 
 async function poll(){
@@ -535,12 +624,15 @@ async function poll(){
     if(!r.ok) throw new Error("http "+r.status);
     var s = await r.json();
     S = s.live; REPORT = s.report; HIST = s.equity||[]; PUSHED = s.pushed_at;
+    QUOTES = s.quotes||null; SENT = s.sentiment||null;
   }catch(e){ S = null; }
   applyAll();
 }
 poll();
+tickClock();
 setInterval(poll, 10000);
-setInterval(function(){ renderAccount(); renderTrade(); renderRobot(); }, 1000);  // ages + now dot tick; strip only on real check-ins
+setInterval(tickClock, 1000);
+setInterval(function(){ renderAccount(); renderTrade(); renderRobot(); renderReport(); renderTicker(); }, 1000);  // ages + now dot tick; strip only on real check-ins
 window.addEventListener("resize", layoutTL);
 </script>
 </body>
