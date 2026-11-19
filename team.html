@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Team + record — live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF7F2; --peach:#F6C9A8; --mint:#CFEAD9;
+    --card:rgba(255,255,255,.78); --hair:#E9E1D8;
+    --ink:#1F1B16; --sec:#6E655C;
+    --gain:#2E7D5B; --loss:#D9512C; --loss-ink:#B23A1C; --caution:#B07714;
+    --sans:'Hanken Grotesk',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scrollbar-width:thin;scrollbar-color:var(--peach) rgba(31,27,22,.06)}
+  html::-webkit-scrollbar{width:12px}
+  html::-webkit-scrollbar-track{background:rgba(31,27,22,.06)}
+  html::-webkit-scrollbar-thumb{background:var(--peach);border-radius:8px;border:3px solid var(--paper)}
+  html::-webkit-scrollbar-thumb:hover{background:var(--caution)}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(52% 62% at 10% 8%, rgba(246,201,168,.90) 0%, rgba(246,201,168,0) 70%),
+    radial-gradient(50% 64% at 90% 24%, rgba(207,234,217,.95) 0%, rgba(207,234,217,0) 72%),
+    radial-gradient(46% 58% at 68% 96%, rgba(246,201,168,.60) 0%, rgba(246,201,168,0) 70%),
+    radial-gradient(40% 50% at 30% 80%, rgba(207,234,217,.55) 0%, rgba(207,234,217,0) 70%),
+    var(--paper);}
+  body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:
+    linear-gradient(to right,rgba(31,27,22,.04) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(31,27,22,.04) 1px,transparent 1px);background-size:56px 56px;}
+  .wrap{max-width:1240px;margin:0 auto;padding:24px 48px}
+  header{display:flex;align-items:baseline;gap:28px;margin-bottom:18px;flex-wrap:wrap}
+  .wordmark{font-size:24px;font-weight:500;letter-spacing:-.01em}
+  nav{display:flex;gap:22px;font-size:18px}
+  nav a{color:var(--sec);text-decoration:none;padding-bottom:3px}
+  nav a.on{color:var(--ink);border-bottom:1.5px solid var(--ink)}
+  .livenote{margin-left:auto;font-size:17px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sec)}
+  .livenote.stale{color:var(--caution)}
+  .card{background:var(--card);border:1px solid var(--hair);border-radius:16px;box-shadow:0 10px 28px rgba(31,27,22,.07);padding:32px}
+  .card.alert{background:linear-gradient(rgba(201,138,27,.09),rgba(201,138,27,.09)),var(--card);border-color:#E2C48C;box-shadow:0 10px 28px rgba(176,119,20,.12)}
+  .label{font-size:17px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sec)}
+  .fig{font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.05}
+  .sentence{font-size:19px;line-height:1.45}
+  .term{font-size:17px;line-height:1.4;color:var(--sec)}
+  .meta{font-size:17px;line-height:1.4;color:var(--sec);font-variant-numeric:tabular-nums}
+  .gain{color:var(--gain)} .loss{color:var(--loss-ink)} .caution{color:var(--caution)}
+
+  .cols{display:grid;grid-template-columns:.92fr 1.08fr;gap:24px;align-items:start}
+  .cols>*{min-width:0}
+  .stack{display:flex;flex-direction:column;gap:24px;min-width:0}
+  .team{position:sticky;top:24px}
+
+  /* team chart (light) */
+  .tier{display:flex;flex-direction:column;gap:6px}
+  .box{border:1px solid var(--hair);border-radius:12px;background:rgba(255,255,255,.7);padding:12px 16px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;cursor:pointer}
+  .box:hover{border-color:var(--peach)}
+  .box b{font-size:18px;font-weight:600}
+  .box span{font-size:17px;color:var(--sec)}
+  .box .dot{width:9px;height:9px;border-radius:50%;background:var(--gain);align-self:center;flex:0 0 auto}
+  .box.you{background:rgba(246,201,168,.35);border-color:rgba(176,119,20,.35);cursor:default}
+  .conn{width:2px;height:14px;background:rgba(31,27,22,.2);margin:2px auto}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .scouts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .scouts .box{padding:8px 26px 8px 10px;flex-direction:column;gap:2px;align-items:flex-start;position:relative}
+  .scouts .box b{font-size:17px}
+  .scouts .box .dot{position:absolute;top:9px;right:9px}
+  .dotlegend{font-size:17px;line-height:1.4;color:var(--sec);margin-top:12px}
+  .dotlegend i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--gain);vertical-align:middle;margin-right:6px}
+  .bandnote{font-size:17px;color:var(--sec);margin:10px 0 6px}
+  .phoneonly{display:none}
+  .detail{margin-top:12px;border-top:1px solid var(--hair);padding-top:12px}
+  .detail .dline{font-size:17px;line-height:1.5;color:var(--sec);font-variant-numeric:tabular-nums}
+  .detail .dline b{color:var(--ink);font-weight:600}
+
+  /* charts */
+  .chart{display:block;width:100%;height:auto;margin-top:10px}
+  .chead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .chead .fig{font-size:46px}
+  .dd .fig{font-size:46px}
+  .legend{display:flex;gap:18px;font-size:17px;color:var(--sec);margin-top:6px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+  /* decision log */
+  .log{max-height:480px;overflow-y:auto;margin-top:12px;padding-right:10px;padding-bottom:56px;
+       scrollbar-width:thin;scrollbar-color:var(--peach) rgba(31,27,22,.06);
+       -webkit-mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);
+       mask-image:linear-gradient(to bottom,#000 88%,transparent 100%);}
+  .log::-webkit-scrollbar{width:10px}
+  .log::-webkit-scrollbar-track{background:rgba(31,27,22,.06);border-radius:8px}
+  .log::-webkit-scrollbar-thumb{background:var(--peach);border-radius:8px;border:2px solid rgba(255,255,255,.7)}
+  .log::-webkit-scrollbar-thumb:hover{background:var(--caution)}
+  .entry{padding:12px 0;border-bottom:1px solid var(--hair)}
+  .entry:last-child{border-bottom:0}
+  .ehead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .role{font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);border:1px solid var(--hair);border-radius:6px;padding:1px 7px;background:rgba(255,255,255,.7)}
+  .role.alan{background:rgba(246,201,168,.4);border-color:rgba(176,119,20,.35)}
+  .etime{font-size:17px;color:var(--sec);font-variant-numeric:tabular-nums}
+  .etopic{font-size:17px;color:var(--sec)}
+  .etext{font-size:18px;line-height:1.45;margin-top:4px;overflow-wrap:anywhere}
+  .etext.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .meaning{font-size:17px;line-height:1.4;color:var(--sec);margin-top:3px;overflow-wrap:anywhere}
+  .orig{display:none;font-size:17px;line-height:1.45;color:var(--sec);margin-top:6px;padding-top:6px;border-top:1px dashed var(--hair);overflow-wrap:anywhere}
+  .entry.open .orig{display:block}
+  .tap{font-size:17px;color:var(--sec);margin-top:3px}
+  .entry{cursor:pointer}
+  .entry.refusal{cursor:pointer}
+  .dline{overflow-wrap:anywhere}
+  .box span{overflow-wrap:anywhere}
+  .entry.refusal{background:rgba(217,81,44,.07);border-left:3px solid var(--loss);border-bottom:0;border-radius:8px;padding:12px;margin:6px 0}
+  .refused{font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--loss-ink);border:1px solid rgba(178,58,28,.45);border-radius:6px;padding:1px 7px;background:rgba(217,81,44,.10)}
+  .logcounts{font-size:17px;font-variant-numeric:tabular-nums;color:var(--sec);margin-top:8px}
+  .logcounts b{color:var(--loss-ink);font-weight:600}
+
+  @media (max-width:900px){
+    .wrap{padding:20px 16px}
+    .cols{grid-template-columns:1fr}
+    .team{position:static}
+    .scouts{grid-template-columns:1fr}
+    .log{max-height:700px}
+    .chart text{display:none}
+    .phoneonly{display:inline}
+    p.phoneonly{display:block}
+    .card{padding:24px}
+    .chead .fig,.dd .fig{font-size:36px}
+    .livenote{margin-left:0;width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="wordmark">Trading desk</div>
+    <nav><a href="index.html">Today</a><a class="on" href="team.html">Team</a></nav>
+    <div class="livenote" id="liveNote">Live · refresh 10s</div>
+  </header>
+
+  <div class="cols">
+    <!-- LEFT: team chart -->
+    <section class="card team">
+      <div class="label">The team</div>
+      <p class="sentence" style="margin:8px 0 14px">Who reports to whom. Tap a box to read its last runs.</p>
+      <div class="tier" id="teamTier"></div>
+      <p class="dotlegend"><i></i><span id="dotLegend">Green dot = this agent actually ran today. No dot = built but not scheduled, or fixed code that only runs when a ticket reaches it.</span></p>
+      <p class="bandnote">The trade path (watcher + dead-man) runs on its own schedule; exits still pass the Guard.</p>
+      <div class="detail" id="teamDetail"><div class="dline">Tap a box above to see its last runs.</div></div>
+      <div class="meta" style="margin-top:10px" id="teamMeta">Reporting lines: team map · waiting for first read…</div>
+    </section>
+
+    <!-- RIGHT: the three judging records -->
+    <div class="stack">
+      <section class="card">
+        <div class="chead">
+          <div class="label">Equity since the start</div>
+        </div>
+        <div class="chead" style="margin-top:6px">
+          <div class="fig" id="eqNow">No live data</div>
+          <div class="sentence" id="eqDelta"></div>
+        </div>
+        <svg class="chart" id="eqChart" viewBox="0 0 640 220" preserveAspectRatio="none" aria-label="Equity curve over the recorded feed window"></svg>
+        <div class="legend"><span><i style="background:var(--gain)"></i>account value</span><span><i style="background:var(--peach)"></i>start $100,000</span><span class="phoneonly" id="eqPeak"></span><span id="eqRange"></span></div>
+        <div class="meta" style="margin-top:8px" id="eqMeta">Paper 5830109 · waiting for first read…</div>
+      </section>
+
+      <section class="card dd" id="ddCard">
+        <div class="label">Drawdown</div>
+        <div class="chead" style="margin-top:6px">
+          <div class="fig" id="ddNow">No live data</div>
+          <div class="sentence" id="ddMax"></div>
+        </div>
+        <svg class="chart" id="ddChart" viewBox="0 0 640 130" preserveAspectRatio="none" aria-label="Drawdown below the running peak"></svg>
+        <p class="term phoneonly">Top line = 0% (the account at its own peak).</p>
+        <div class="term">Drawdown = how far the account is below its own highest point. Deeper = worse.</div>
+        <div class="meta" style="margin-top:8px" id="ddMeta">Derived from the same equity curve above · waiting for first read…</div>
+      </section>
+
+      <section class="card">
+        <div class="label">Decision log</div>
+        <p class="sentence" style="margin-top:6px">Every call in plain words — who did what, and why it matters. Newest first. Tap a row to read the original technical note; scroll for older.</p>
+        <div class="logcounts" id="logCounts"></div>
+        <div class="log" id="log"><div class="entry"><div class="etext">No live data — waiting for the first read.</div></div></div>
+        <div class="meta" style="margin-top:10px" id="logMeta">state/decision-log.jsonl (Journal appends) + watcher run summaries (QCA, read-only)</div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Live page 2. Every figure carries its source and a concrete age; >90s = STALE;
+   missing data = the words "No live data", never an invented number.
+   Sources: /api/live (account + roles), /api/team (ran-today dots),
+   /api/decisions (Journal log + Guard/gate ticket events), and the feed's own
+   equity-history.jsonl for the curve. The $100,000 start is the verified paper
+   baseline (team/settings.json, re-read live 19 Nov). */
+var START = 100000;
+var PUSHED = null;
+var POLL_MS = 10000, STALE_S = 90;
+var S = { live: null, team: null, dec: null, eq: null, eqTs: null, decTs: null, teamTs: null, liveTs: null };
+
+function money(v){var s=v<0?"−$":"$";var p=Math.abs(v).toFixed(2).split(".");return s+Number(p[0]).toLocaleString("en-US")+"."+p[1];}
+function pct(v){return v.toFixed(2).replace("-","−")+"%";}
+function sgt(ts){
+  if(!ts) return "—";
+  var d=new Date(ts);
+  var m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var p=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Singapore",day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(d);
+  var g=function(t){var x=p.find(function(q){return q.type===t;});return x?x.value:"";};
+  return g("day")+" "+m[Number(g("month"))-1]+" "+g("hour")+":"+g("minute");
+}
+function ageS(ts){ return ts? Math.max(0,(Date.now()-Date.parse(ts))/1000) : null; }
+function ageWord(ts){
+  var a=ageS(ts); if(a==null) return "no read yet";
+  if(a<60) return Math.round(a)+"s ago";
+  if(a<3600) return Math.round(a/60)+"m ago";
+  return Math.round(a/3600)+"h ago";
+}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ---------- fetch ---------- */
+function getJSON(url){ return fetch(url,{cache:"no-store"}).then(function(r){ if(!r.ok) throw new Error(url+" "+r.status); return r.json(); }); }
+function getText(url){ return fetch(url,{cache:"no-store"}).then(function(r){ if(!r.ok) throw new Error(url+" "+r.status); return r.text(); }); }
+function poll(){
+  getJSON("data/snapshot.json").then(function(s){
+    PUSHED=s.pushed_at;
+    S.live=s.live; S.team=s.team; S.dec=s.decisions;
+    S.liveTs=S.teamTs=S.decTs=S.eqTs=s.pushed_at;
+    var pts=(s.equity||[]).map(function(p){return [p.ts_utc,p.equity];});
+    pts.sort(function(a,b){return a[0].localeCompare(b[0]);});
+    S.eq=pts;
+    /* mirror honesty: recompute staleness at view time, not push time */
+    if(S.live && S.live.account && S.live.account.ts_utc){
+      var age=(Date.now()-Date.parse(S.live.account.ts_utc))/1000;
+      S.live.account.stale=age>90; S.live.account.live=age<=90;
+    }
+  }).catch(function(){ /* keep last good; ages tell the truth */ });
+  setTimeout(render, 50);
+}
+
+/* ---------- team chart ---------- */
+function boxHTML(a){
+  var h='<div class="box" data-key="'+a.key+'">';
+  if(a.dot) h+='<span class="dot"></span>';
+  h+='<b>'+esc(a.label)+'</b>';
+  if(a.span) h+='<span>'+esc(a.span)+'</span>';
+  if(a.words) h+='<span>'+esc(a.words)+'</span>';
+  return h+'</div>';
+}
+function renderTeam(){
+  var t=S.team;
+  var tier=document.getElementById("teamTier");
+  if(!t){ tier.innerHTML='<div class="box you"><b>Alan</b><span>decides · approvals, limits</span></div><div class="conn"></div><div class="box"><b>No live data</b><span>team read not arrived yet</span></div>'; return; }
+  var by={}; t.agents.forEach(function(a){by[a.key]=a;});
+  var h='<div class="box you"><b>Alan</b><span>decides · approvals, limits</span></div><div class="conn"></div>';
+  h+=boxHTML(by.orchestrator)+'<div class="conn"></div>';
+  h+='<div class="scouts">'+boxHTML(Object.assign({},by.scouts,{words:null}))+boxHTML(by.researcher)+boxHTML(by.strategy)+'</div>';
+  h+='<p class="bandnote">'+esc(by.scouts.words)+'</p><div class="conn"></div>';
+  h+=boxHTML(by.executor)+'<div class="conn"></div>';
+  h+='<div class="pair">'+boxHTML(by.guard)+boxHTML(by.gate)+'</div><div class="conn"></div>';
+  h+='<div class="pair">'+boxHTML(by.watcher)+boxHTML(by.deadman)+'</div><div class="conn"></div>';
+  h+='<div class="box you"><b>Paper 5830109</b><span>started $100,000 · never reset</span></div>';
+  tier.innerHTML=h;
+  document.getElementById("dotLegend").textContent=t.legend;
+  Array.prototype.forEach.call(tier.querySelectorAll(".box[data-key]"),function(el){
+    el.addEventListener("click",function(){ showDetail(el.getAttribute("data-key")); });
+  });
+}
+function showDetail(key){
+  var t=S.team, d=document.getElementById("teamDetail");
+  var a=t && t.agents.find(function(x){return x.key===key;});
+  if(!a){ d.innerHTML='<div class="dline">No live data for this box yet.</div>'; return; }
+  var h='<div class="dline"><b>'+esc(a.label)+'</b> · '+esc(a.words)+(a.last_ts?' · last run '+sgt(a.last_ts)+' SGT ('+ageWord(a.last_ts)+')':'')+'</div>';
+  var role=S.live && S.live.roles && S.live.roles[key];
+  if(role && role.history && role.history.length){
+    role.history.slice(0,5).forEach(function(r){
+      h+='<div class="dline">'+sgt(r.t)+' SGT · '+esc(r.action)+(r.ok===false?' · <span class="loss">error</span>':r.ok===true?' · ok':' · running')+(r.note?' · '+esc(r.note):'')+'</div>';
+    });
+    h+='<div class="dline">source: QCA deployment runs + session events (read-only)</div>';
+  } else if(key==="orchestrator"){
+    var acc=S.live && S.live.account;
+    h+='<div class="dline">'+(acc && acc.ts_utc ? 'feed last wrote '+ageWord(acc.ts_utc)+' · equity '+money(acc.equity) : 'No live data from the feed yet.')+'</div>';
+    h+='<div class="dline">source: status/account.json (desktop 30s poller)</div>';
+  } else {
+    h+='<div class="dline">'+(a.runs_today!=null ? a.runs_today+' session(s) today (UTC day).' : 'Runs only when a ticket reaches it; see the decision log.')+'</div>';
+    h+='<div class="dline">source: QCA list_sessions (read-only)</div>';
+  }
+  d.innerHTML=h;
+}
+
+/* ---------- equity + drawdown (one series drives both) ---------- */
+function series(){
+  var pts=S.eq||[];
+  if(pts.length>400){ var stride=Math.ceil(pts.length/400); var out=[]; for(var i=0;i<pts.length;i+=stride) out.push(pts[i]); if(out[out.length-1]!==pts[pts.length-1]) out.push(pts[pts.length-1]); pts=out; }
+  return pts;
+}
+function renderEquity(){
+  var acc=S.live && S.live.account;
+  var pts=series();
+  var eqNow=document.getElementById("eqNow"), eqDelta=document.getElementById("eqDelta"), eqMeta=document.getElementById("eqMeta");
+  var stale=acc && acc.stale;
+  if(!acc || acc.equity==null){
+    eqNow.textContent="No live data"; eqNow.className="fig caution"; eqDelta.textContent="";
+    document.getElementById("eqChart").innerHTML="";
+    document.getElementById("eqRange").textContent="";
+    eqMeta.textContent="Paper 5830109 · no account read yet · source status/account.json";
+    return;
+  }
+  var d=acc.equity-START;
+  eqNow.textContent=money(acc.equity);
+  eqNow.className="fig "+(d>=0?"gain":"loss")+(stale?" caution":"");
+  eqDelta.textContent=(d>=0?"+":"−")+money(Math.abs(d)).replace("−","")+" since the $100,000 start";
+  eqDelta.className="sentence "+(d>=0?"gain":"loss");
+  if(!pts.length){
+    document.getElementById("eqChart").innerHTML="";
+    document.getElementById("eqRange").textContent="no point history yet";
+    eqMeta.textContent=(stale?"STALE · ":"")+"Paper 5830109 · 30s feed · last write "+ageWord(acc.ts_utc)+" · point history not started yet";
+    return;
+  }
+  var W=640,H=220,P=34;
+  var vals=pts.map(function(p){return p[1];});
+  var lo=Math.min.apply(null,vals.concat([START])), hi=Math.max.apply(null,vals.concat([START]));
+  var pad=(hi-lo)*0.15||1; lo-=pad; hi+=pad;
+  var t0=Date.parse(pts[0][0]), t1=Date.parse(pts[pts.length-1][0]);
+  var X=function(ts){ return t1===t0? (W/2) : P+((Date.parse(ts)-t0)/(t1-t0))*(W-2*P); };
+  var Y=function(v){ return H-24-((v-lo)/(hi-lo))*(H-52); };
+  var line=pts.map(function(p){return X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1);}).join(" ");
+  var area="M"+X(pts[0][0]).toFixed(1)+","+(H-24)+" L"+line.split(" ").join(" L")+" L"+X(pts[pts.length-1][0]).toFixed(1)+","+(H-24)+" Z";
+  var baseY=Y(START);
+  var peakI=vals.indexOf(Math.max.apply(null,vals));
+  var svg='<defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0" stop-color="#CFEAD9" stop-opacity=".9"/><stop offset="1" stop-color="#CFEAD9" stop-opacity="0"/></linearGradient></defs>';
+  svg+='<path d="'+area+'" fill="url(#eg)"/>';
+  svg+='<line x1="'+P+'" y1="'+baseY.toFixed(1)+'" x2="'+(W-P)+'" y2="'+baseY.toFixed(1)+'" stroke="#F6C9A8" stroke-width="2" stroke-dasharray="5 4"/>';
+  svg+='<polyline points="'+line+'" fill="none" stroke="#2E7D5B" stroke-width="2.5"/>';
+  svg+='<circle cx="'+X(pts[peakI][0]).toFixed(1)+'" cy="'+Y(vals[peakI]).toFixed(1)+'" r="4" fill="#1F1B16"/>';
+  svg+='<text x="'+(X(pts[peakI][0])+8).toFixed(1)+'" y="'+(Y(vals[peakI])-8).toFixed(1)+'" font-size="17" fill="#6E655C">peak '+money(vals[peakI])+'</text>';
+  svg+='<circle cx="'+X(pts[pts.length-1][0]).toFixed(1)+'" cy="'+Y(vals[vals.length-1]).toFixed(1)+'" r="5" fill="#2E7D5B"/>';
+  svg+='<text x="'+P+'" y="'+(H-6)+'" font-size="17" fill="#6E655C">'+sgt(pts[0][0])+'</text>';
+  svg+='<text x="'+(W-P)+'" y="'+(H-6)+'" font-size="17" fill="#6E655C" text-anchor="end">'+sgt(pts[pts.length-1][0])+'</text>';
+  svg+='<text x="'+P+'" y="'+(baseY-6).toFixed(1)+'" font-size="17" fill="#B07714">start $100,000</text>';
+  document.getElementById("eqPeak").textContent="peak "+money(Math.max.apply(null,vals));
+  document.getElementById("eqChart").innerHTML=svg;
+  document.getElementById("eqRange").textContent=sgt(pts[0][0])+" → "+sgt(pts[pts.length-1][0])+" SGT";
+  eqMeta.textContent=(stale?"STALE · ":"")+"Paper 5830109 · 30s feed · last write "+ageWord(acc.ts_utc)+" · "+pts.length+" recorded points since "+sgt(pts[0][0])+" SGT (earlier sessions not point-recorded) · start baseline team/settings.json";
+}
+function renderDD(){
+  var pts=series();
+  var ddNow=document.getElementById("ddNow"), ddMax=document.getElementById("ddMax"), ddMeta=document.getElementById("ddMeta");
+  var card=document.getElementById("ddCard");
+  var acc=S.live && S.live.account;
+  card.className="card dd"+(acc && (acc.today_pnl||0)<0 ? " alert":"");
+  if(!pts.length){
+    ddNow.textContent="No live data"; ddNow.className="fig caution"; ddMax.textContent="";
+    document.getElementById("ddChart").innerHTML="";
+    ddMeta.textContent="Derived from the equity curve above · no point history yet";
+    return;
+  }
+  var peak=START, dd=pts.map(function(p){ peak=Math.max(peak,p[1]); return (p[1]-peak)/peak*100; });
+  var worst=Math.min.apply(null,dd);
+  var W=640,H=130,P=34;
+  var t0=Date.parse(pts[0][0]), t1=Date.parse(pts[pts.length-1][0]);
+  var X=function(ts){ return t1===t0? (W/2) : P+((Date.parse(ts)-t0)/(t1-t0))*(W-2*P); };
+  var Y=function(v){ return worst===0? 18 : 18+(v/worst)*(H-46); };
+  var line=pts.map(function(p,i){return X(p[0]).toFixed(1)+","+Y(dd[i]).toFixed(1);}).join(" ");
+  var area="M"+X(pts[0][0]).toFixed(1)+",18 L"+line.split(" ").join(" L")+" L"+X(pts[pts.length-1][0]).toFixed(1)+",18 Z";
+  var svg='<defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0" stop-color="#D9512C" stop-opacity="0"/><stop offset="1" stop-color="#D9512C" stop-opacity=".55"/></linearGradient></defs>';
+  svg+='<line x1="'+P+'" y1="18" x2="'+(W-P)+'" y2="18" stroke="#E9E1D8" stroke-width="2"/>';
+  svg+='<path d="'+area+'" fill="url(#dg)"/>';
+  svg+='<polyline points="'+line+'" fill="none" stroke="#D9512C" stroke-width="2.5"/>';
+  var wi=dd.indexOf(worst);
+  svg+='<circle cx="'+X(pts[wi][0]).toFixed(1)+'" cy="'+Y(worst).toFixed(1)+'" r="4" fill="#B23A1C"/>';
+  svg+='<text x="'+(X(pts[wi][0])+8).toFixed(1)+'" y="'+(Y(worst)+16).toFixed(1)+'" font-size="17" fill="#B23A1C">worst '+pct(worst)+'</text>';
+  svg+='<text x="'+P+'" y="12" font-size="17" fill="#6E655C">0% (at peak)</text>';
+  document.getElementById("ddChart").innerHTML=svg;
+  ddNow.textContent=pct(dd[dd.length-1]);
+  ddNow.className="fig "+(dd[dd.length-1]<0?"loss":"gain");
+  ddMax.textContent="worst fall from a peak: "+pct(worst);
+  var lastTs=pts[pts.length-1][0];
+  ddMeta.textContent=(ageS(lastTs)>STALE_S?"STALE · ":"")+"Derived from the same equity curve · peak floor = $100,000 start · last point "+ageWord(lastTs);
+}
+
+/* ---------- decision log ---------- */
+var expanded = {};
+function renderLog(){
+  var d=S.dec, el=document.getElementById("log"), counts=document.getElementById("logCounts");
+  if(!d){ el.innerHTML='<div class="entry"><div class="etext">No live data — decision read not arrived yet.</div></div>'; counts.textContent=""; return; }
+  if(!d.entries.length){
+    el.innerHTML='<div class="entry"><div class="etext">No live data — no decisions recorded yet.</div></div>';
+    counts.innerHTML='Today: 0 yes · <b>0 no</b> &nbsp;(a "no" = the safety check or gate blocked an order).';
+  } else {
+    counts.innerHTML='Today: '+d.counts.today_approvals+' yes · <b>'+d.counts.today_refusals+' no</b> &nbsp;(a "no" = the safety check or gate blocked an order).';
+    el.innerHTML=d.entries.map(function(e){
+      var key=(e.ts_utc||"")+"|"+e.role+"|"+e.topic;
+      var p=e.plain||{role_label:e.role, head:e.text, meaning:""};
+      var open=!!expanded[key];
+      return '<div class="entry'+(e.refusal?" refusal":"")+(open?" open":"")+'" data-key="'+esc(key)+'"><div class="ehead"><span class="role '+esc(e.role)+'">'+esc(p.role_label)+'</span>'
+        +(e.refusal?'<span class="refused">said no</span>':'')
+        +'<span class="etime">'+sgt(e.ts_utc)+' SGT</span></div>'
+        +'<div class="etext">'+esc(p.head)+'</div>'
+        +(p.meaning?'<div class="meaning">'+esc(p.meaning)+'</div>':'')
+        +'<div class="tap">'+(open?"tap to hide the original note":"tap for the original note")+'</div>'
+        +'<div class="orig">'+esc(e.text)+'</div></div>';
+    }).join("");
+    Array.prototype.forEach.call(el.querySelectorAll(".entry"),function(row){
+      row.addEventListener("click",function(){
+        var k=row.getAttribute("data-key"); expanded[k]=!expanded[k];
+        row.classList.toggle("open", expanded[k]);
+        var t=row.querySelector(".tap"); if(t) t.textContent = expanded[k]?"tap to hide the original note":"tap for the original note";
+      });
+    });
+  }
+}
+
+/* ---------- ages + live note ---------- */
+function renderNote(){
+  var n=document.getElementById("liveNote");
+  var acc=S.live && S.live.account;
+  var push=PUSHED?("pushed "+ageWord(PUSHED)):"mirror";
+  if(!S.live){ n.textContent="No live data · "+push; n.className="livenote stale"; return; }
+  if(acc && acc.stale){ n.textContent="STALE · "+push; n.className="livenote stale"; }
+  else if(acc && acc.live){ n.textContent="Public mirror · "+push; n.className="livenote"; }
+  else { n.textContent="No live account data · "+push; n.className="livenote stale"; }
+  var tm=document.getElementById("teamMeta");
+  if(S.team){
+    tm.textContent="Reporting lines: team map · dots from QCA session counts (read-only) · checked "+ageWord(S.team.fetched_at)+(S.team.qca_ok?"":" · QCA unreachable");
+  }
+  var lm=document.getElementById("logMeta");
+  if(S.dec){
+    lm.textContent="Public mirror of the decision log · pushed "+ageWord(S.decTs)+" · original: Journal state/decision-log.jsonl + watcher/dead-man runs (read-only)";
+  }
+}
+function render(){ renderTeam(); renderEquity(); renderDD(); renderLog(); renderNote(); }
+poll();
+setInterval(poll, POLL_MS);
+setInterval(function(){ renderEquity(); renderDD(); renderNote(); }, 1000);
+</script>
+</body>
+</html>

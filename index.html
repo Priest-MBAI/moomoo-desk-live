@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trading desk — today</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Approved design: skills/dashboard-design/SKILL.md. Light warm paper, peach/mint
+     blooms, white hairline cards, Hanken Grotesk everywhere, nothing under 15px. */
+  :root{
+    --paper:#FBF7F2;
+    --peach:#F6C9A8;
+    --mint:#CFEAD9;
+    --card:rgba(255,255,255,.78);
+    --hair:#E9E1D8;
+    --ink:#1F1B16;
+    --sec:#6E655C;
+    --gain:#2E7D5B;
+    --loss:#D9512C;
+    --loss-ink:#B23A1C;
+    --caution:#B07714;
+    --sans:'Hanken Grotesk',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:18px;
+    -webkit-font-smoothing:antialiased;
+    position:relative;overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(52% 62% at 10% 8%,  rgba(246,201,168,.90) 0%, rgba(246,201,168,0) 70%),
+      radial-gradient(50% 64% at 90% 24%, rgba(207,234,217,.95) 0%, rgba(207,234,217,0) 72%),
+      radial-gradient(46% 58% at 68% 96%, rgba(246,201,168,.60) 0%, rgba(246,201,168,0) 70%),
+      radial-gradient(40% 50% at 30% 80%, rgba(207,234,217,.55) 0%, rgba(207,234,217,0) 70%),
+      var(--paper);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:
+      linear-gradient(to right,rgba(31,27,22,.04) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(31,27,22,.04) 1px,transparent 1px);
+    background-size:56px 56px;
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:24px 48px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+
+  header{display:flex;align-items:baseline;gap:28px;margin-bottom:18px;flex-wrap:wrap}
+  .wordmark{font-size:24px;font-weight:500;letter-spacing:-.01em}
+  nav{display:flex;gap:22px;font-size:18px}
+  nav a{color:var(--sec);text-decoration:none;padding-bottom:3px}
+  nav a.on{color:var(--ink);border-bottom:1.5px solid var(--ink)}
+  nav a:hover{color:var(--ink)}
+  .livenote{margin-left:auto;font-size:17px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sec)}
+
+  .card{
+    background:var(--card);border:1px solid var(--hair);border-radius:16px;
+    box-shadow:0 10px 28px rgba(31,27,22,.07);padding:32px;
+  }
+  .label{font-size:17px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sec)}
+  .fig{font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.05}
+  .sentence{font-size:19px;line-height:1.45;color:var(--ink);font-weight:400}
+  .term{font-size:17px;line-height:1.4;color:var(--sec)}
+  .meta{font-size:17px;line-height:1.4;color:var(--sec);font-variant-numeric:tabular-nums}
+  .gain{color:var(--gain)}
+  .loss{color:var(--loss-ink)}
+  .caution{color:var(--caution)}
+  .staleword{color:var(--caution);font-weight:600}
+  .verdict{font-size:38px;font-weight:300;letter-spacing:-.02em;line-height:1.12}
+  .nodata{font-size:32px;font-weight:300;letter-spacing:-.01em;line-height:1.15}
+
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;margin-bottom:18px}
+  .hero .fig.big{font-size:76px;margin:6px 0 10px}
+  .hero .fig.mid{font-size:56px;margin:6px 0 8px}
+  .spark{display:block;width:100%;height:36px;margin:0 0 6px}
+  .hero .right{border-left:1px solid var(--hair);padding-left:40px;display:flex;flex-direction:column}
+  .hero .right .meta{margin-top:auto;padding-top:12px}
+
+  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .row .card{display:flex;flex-direction:column;gap:8px}
+  .row .meta{margin-top:auto;padding-top:4px}
+  .readlink{font-size:18px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair);align-self:flex-start;padding-bottom:2px}
+  .readlink:hover{border-bottom-color:var(--ink)}
+  .summary{font-size:28px;font-weight:300;letter-spacing:-.01em;line-height:1.2}
+
+  .counts{font-size:19px;line-height:1.4;font-variant-numeric:tabular-nums}
+  .trades{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+  .trade .main{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .trade .sym{font-size:19px;font-weight:500}
+  .trade .pl{font-size:26px;font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .trade .pl.words{font-size:17px;font-weight:500;color:var(--sec)}
+  .trade .sub{font-size:17px;line-height:1.4;color:var(--sec);font-variant-numeric:tabular-nums}
+  .trade .sub.stop{color:var(--ink);font-weight:500}
+
+  .card.alert{
+    background:linear-gradient(rgba(201,138,27,.09),rgba(201,138,27,.09)),var(--card);
+    border-color:#E2C48C;box-shadow:0 10px 28px rgba(176,119,20,.12);
+  }
+
+  .strip{display:flex;gap:3px;align-items:flex-end;height:20px;margin-top:2px}
+  .strip i{flex:1;height:14px;border-radius:2px;background:var(--gain)}
+  .strip i.warn{background:var(--caution);height:10px}
+  .strip i.err{background:var(--loss);height:7px}
+  .strip i.gap{background:transparent;border:1px dashed var(--hair);height:7px}
+  .strip i.pre{background:rgba(31,27,22,.07);height:7px}
+  .strip.frozen i{opacity:.85}
+  .feedlabel{font-size:17px;color:var(--sec)}
+
+  /* night timeline: track = session open-90min -> close. Entry band widened to a
+     visible minimum; exact times printed on labels; labels never sit on the dot. */
+  .tl{position:relative;height:60px;margin-top:2px}
+  .tl .line{position:absolute;left:0;right:0;top:26px;height:2px;background:rgba(31,27,22,.25)}
+  .tl .band{position:absolute;top:19px;height:16px;background:rgba(246,201,168,.95);border:1px solid rgba(176,119,20,.45);border-radius:4px}
+  .tl .tick{position:absolute;top:19px;width:2px;height:16px;background:var(--ink)}
+  .tl .now{position:absolute;top:21px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(31,27,22,.12)}
+  .tl .lab{position:absolute;font-size:17px;line-height:18px;color:var(--sec);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .tl .lab.above{top:0}
+  .tl .lab.at{top:18px;color:var(--ink);font-weight:500;padding:0 4px;border-radius:4px;background:rgba(255,255,255,.88)}
+  .card.alert .tl .lab.at{background:rgba(246,237,226,.92)}
+  .tl .lab.below{top:42px}
+  .tl .lab.below2{top:60px}
+
+  /* phone: one column, same words, same honesty */
+  @media (max-width:900px){
+    .wrap{padding:20px 16px;justify-content:flex-start}
+    .hero{grid-template-columns:1fr;gap:20px}
+    .hero .right{border-left:0;padding-left:0;border-top:1px solid var(--hair);padding-top:20px}
+    .hero .fig.big{font-size:48px}
+    .hero .fig.mid{font-size:40px}
+    .row{grid-template-columns:1fr}
+    .card{padding:24px}
+    .verdict{font-size:32px}
+    .nodata{font-size:28px}
+    .livenote{margin-left:0;width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">Trading desk</div>
+    <nav>
+      <a class="on" href="index.html">Today</a>
+      <a href="team.html">Team</a>
+    </nav>
+    <div class="livenote" id="livenote">Live · read-only</div>
+  </header>
+
+  <!-- Card 1: account value + today -->
+  <section class="card hero">
+    <div class="left">
+      <div class="label">Account value</div>
+      <div class="fig big" id="equity">No live data</div>
+      <svg class="spark" id="spark" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true" hidden>
+        <polyline id="sparkline" fill="none" stroke="#2E7D5B" stroke-width="2" points=""/>
+      </svg>
+      <div class="term" id="sparknote">Today's account value, minute by minute.</div>
+      <div class="term">Paper account = practice money, not real cash.</div>
+    </div>
+    <div class="right">
+      <div class="label">Today</div>
+      <div class="fig mid" id="pnl">No live data</div>
+      <div class="sentence">What the account made or lost since yesterday's close.</div>
+      <div class="meta" id="acctMeta">moomoo paper account · waiting for the feed</div>
+    </div>
+  </section>
+
+  <div class="row">
+    <!-- Card 2: tonight's trades (several per night) + night timeline -->
+    <section class="card" id="tradeCard">
+      <div class="label">Tonight's trade</div>
+      <div class="verdict" id="tradeVerdict">No live data</div>
+      <div class="counts sentence" id="tradeCounts" hidden></div>
+      <div class="sentence" id="tradeSentence">The account and watcher feeds are not reachable, so nothing is shown rather than a guess.</div>
+      <div class="trades" id="trades"></div>
+      <div class="term" id="tradeTerm" hidden>Call = a bet the price rises · put = a bet it falls.</div>
+      <div class="tl" id="tl" aria-hidden="true">
+        <div class="line"></div>
+        <div class="band" id="tlBand"></div>
+        <div class="tick" id="tlOpen"></div>
+        <div class="tick" id="tlClose"></div>
+        <div class="now" id="tlNow"></div>
+        <div class="lab above" id="tlEntryLab">entry</div>
+        <div class="lab at" id="tlNowLab">now</div>
+        <div class="lab below" id="tlOpenLab">open</div>
+        <div class="lab below" id="tlCloseLab">close</div>
+      </div>
+      <div class="term">The night, open to close. Dot = now.</div>
+      <div class="meta" id="tradeMeta">waiting for the feed</div>
+    </section>
+
+    <!-- Card 3: robot health + check-in strip (advances only on real check-ins) -->
+    <section class="card" id="robotCard">
+      <div class="label">Robot</div>
+      <div class="verdict" id="robotVerdict">No live data</div>
+      <div class="sentence" id="robotSentence">The robot feed is not reachable, so nothing is shown rather than a guess.</div>
+      <div class="strip" id="strip" aria-hidden="true"></div>
+      <div class="term" id="stripNote">Each mark is one check-in, newest on the right.</div>
+      <div class="feedlabel" id="feedState">waiting for the feed</div>
+      <div class="term">Dead-man = the backup alarm that fires if the watcher goes quiet.</div>
+      <div class="meta" id="robotMeta">watcher + dead-man · QCA, read-only</div>
+    </section>
+
+    <!-- Card 4: pre-market report -->
+    <section class="card" id="reportCard">
+      <div class="label">Pre-market report</div>
+      <div class="summary" id="reportVerdict">No live data</div>
+      <div class="sentence" id="reportSentence">The report feed has not delivered tonight's report, so nothing is shown rather than a guess.</div>
+      <div class="term" id="reportTerm">Scouts = 24 research robots in six groups that read news and mood before the open.</div>
+      <a class="readlink" id="reportLink" href="data/report.txt" target="_blank" rel="noopener" hidden>Read the full report →</a>
+      <div class="meta" id="reportMeta">Compiles 22:00 SGT, before the open, each trading day</div>
+    </section>
+  </div>
+
+</div>
+
+<script>
+/* =====================================================================
+   Live wiring. GET /api/live from the local read-only bridge every 10s.
+   The page holds NO token and makes NO cloud or moomoo calls. Every figure
+   carries source + a concrete age; >90s = STALE; missing = "No live data".
+   The check-in strip advances ONLY when a real check-in arrives.
+   ===================================================================== */
+var S = null;                 // last /api/live snapshot
+var HIST = [];                // equity history points (orchestrator-appended)
+var REPORT = null;
+var PUSHED = null;
+var SESSION = { open: null, close: null, es: null, ee: null };  // ms UTC
+var LAST_STRIP_KEY = "";      // strip re-renders only when check-ins change
+
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function money(v){
+  var n = Number(v);
+  if (v==null || isNaN(n)) return null;
+  var sign = n<0 ? "−$" : "$";
+  var p = Math.abs(n).toFixed(2).split(".");
+  return sign + Number(p[0]).toLocaleString("en-US") + "." + p[1];
+}
+function signed(v){ var m = money(v); return m==null ? null : (Number(v)>0 ? "+"+m : m); }
+function ageStr(ts){
+  if(!ts) return null;
+  var s = Math.max(0, Math.round((Date.now()-Date.parse(ts))/1000));
+  if (s<60) return s+"s ago";
+  if (s<3600) return Math.floor(s/60)+" min ago";
+  return Math.floor(s/3600)+"h "+Math.floor((s%3600)/60)+"m ago";
+}
+function sgtHM(ts){ return new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Singapore",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date(ts)); }
+function $(id){ return document.getElementById(id); }
+
+/* ---------- session times from the bridge (tonight, real) ---------- */
+function setSession(t){
+  if (t && t.session_utc){
+    SESSION.open = Date.parse(t.session_utc.open);
+    SESSION.close = Date.parse(t.session_utc.close);
+    SESSION.es = Date.parse(t.entry_window_utc[0]);
+    SESSION.ee = Date.parse(t.entry_window_utc[1]);
+  }
+}
+
+/* ---------- card 1 ---------- */
+function renderAccount(){
+  var a = S && S.account;
+  var eq = $("equity"), pn = $("pnl"), meta = $("acctMeta");
+  if (!a || a.ts_utc==null || a.equity==null){
+    eq.textContent = "No live data"; eq.className = "fig big";
+    pn.textContent = "No live data"; pn.className = "fig mid";
+    meta.textContent = "moomoo paper account · no feed yet";
+    $("spark").hidden = true;
+    $("sparknote").textContent = "No live data yet today.";
+    return;
+  }
+  var age = (Date.now()-Date.parse(a.ts_utc))/1000;
+  var stale = age > 90;
+  eq.textContent = money(a.equity); eq.className = "fig big";
+  if (a.today_pnl==null){ pn.textContent = "No live data"; pn.className = "fig mid"; }
+  else {
+    pn.textContent = signed(a.today_pnl);
+    pn.className = "fig mid " + (Number(a.today_pnl)>=0 ? "gain" : "loss");
+  }
+  var src = "moomoo paper account";
+  if (!a.live && !stale) src += " · snapshot";
+  meta.innerHTML = esc(src) + " · " + (stale ? '<span class="staleword">STALE</span> · ' : "") + esc(ageStr(a.ts_utc));
+  renderSpark();
+}
+function renderSpark(){
+  var svg = $("spark"), note = $("sparknote");
+  var dayStart = Date.now(); var d0 = new Date(dayStart); d0.setUTCHours(0,0,0,0); dayStart = d0.getTime();
+  var pts = HIST.filter(function(p){ return Date.parse(p.ts_utc) >= dayStart; });
+  if (pts.length < 2){ svg.hidden = true; note.textContent = "No live data yet today."; return; }
+  svg.hidden = false; note.textContent = "Today's account value, minute by minute.";
+  var vals = pts.map(function(p){ return Number(p.equity); });
+  var min = Math.min.apply(null,vals), max = Math.max.apply(null,vals);
+  var span = (max-min);
+  var t0 = Date.parse(pts[0].ts_utc), t1 = Date.parse(pts[pts.length-1].ts_utc);
+  var dt = (t1-t0) || 1;
+  var str = pts.map(function(p){
+    var x = (Date.parse(p.ts_utc)-t0)/dt*400;
+    var y = span>0 ? 32 - (Number(p.equity)-min)/span*28 : 18;
+    return x.toFixed(1)+","+y.toFixed(1);
+  }).join(" ");
+  $("sparkline").setAttribute("points", str);
+  $("sparkline").setAttribute("stroke", vals[vals.length-1] >= vals[0] ? "#2E7D5B" : "#D9512C");
+}
+
+/* ---------- card 2: several trades, one line each ---------- */
+function optName(sym){
+  var m = String(sym||"").match(/^US\.([A-Z]+)(\d{6})([CP])(\d+)$/);
+  if (!m) return { label: String(sym||"").replace("US.","") + " shares", kind: null, mult: 1 };
+  var strike = Number(m[4])/1000;
+  var mon = Number(m[2].slice(2,4)), day = Number(m[2].slice(4,6));
+  var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return { label: m[1]+" "+(m[3]==="C"?"call":"put")+" $"+strike+" · "+day+" "+months[mon-1], kind: m[3]==="C"?"call":"put", mult: 100 };
+}
+function tradeVerdictOf(){
+  var a = S && S.account, t = S && S.trade;
+  var pos = (a && a.positions) || [];
+  var now = Date.now();
+  if ((!a || a.ts_utc==null) && !(S && S.live_parts && S.live_parts.trade)) return "No live data";
+  if (pos.length) return "In a trade";
+  var exitToday = t && t.exit && SESSION.open && Date.parse(t.exit.ts_utc) >= SESSION.open - 90*60000;
+  if (exitToday) return /stop/.test(t.exit.kind||"") ? "Stopped out" : "Closed for the day";
+  if (SESSION.open && now < SESSION.open) return "Waiting for the open";
+  if (SESSION.ee && now > SESSION.ee && SESSION.close && now < SESSION.close) return "No trade today";
+  if (SESSION.close && now >= SESSION.close) return "Closed for the day";
+  return "Waiting for the open";
+}
+function renderTrade(){
+  var a = S && S.account, t = S && S.trade;
+  var pos = (a && a.positions) || [];
+  var v = tradeVerdictOf();
+  var card = $("tradeCard");
+  $("tradeVerdict").textContent = v;
+  $("tradeVerdict").className = "verdict";
+  var losing = pos.filter(function(p){ return Number(p.pl_val)<0; });
+  var problem = (v==="In a trade" && losing.length>0) || v==="Stopped out";
+  card.classList.toggle("alert", problem);
+  var counts = $("tradeCounts"), sent = $("tradeSentence"), box = $("trades"), term = $("tradeTerm");
+  box.innerHTML = "";
+  if (v==="In a trade"){
+    var win = pos.filter(function(p){ return Number(p.pl_val)>0; }).length;
+    var los = losing.length;
+    var unk = pos.length - win - los;
+    counts.hidden = false;
+    counts.innerHTML = pos.length+" open · <span class=\"gain\">"+win+" winning</span> · <span class=\""+(los?"loss":"gain")+"\">"+los+" losing</span>" + (unk? " · "+unk+" no mark yet":"");
+    sent.hidden = true; term.hidden = false;
+    pos.forEach(function(p){
+      var o = optName(p.symbol);
+      var pl = p.pl_val==null ? null : Number(p.pl_val);
+      var row = document.createElement("div"); row.className = "trade";
+      var plHtml = pl==null ? '<span class="pl words">No live data</span>'
+        : '<span class="pl '+(pl>=0?"gain":"loss")+'">'+esc(signed(pl))+'</span>';
+      var html = '<div class="main"><span class="sym">'+esc(o.label)+'</span>'+plHtml+'</div>';
+      if (pl!=null && pl<0){
+        var qty = Number(p.qty)||0;
+        var bought = p.avg_cost!=null?Number(p.avg_cost):null;
+        var nowp = p.last_price!=null?Number(p.last_price):null;
+        if (bought!=null && nowp!=null)
+          html += '<div class="sub">'+qty+(o.mult===100?" contracts":" shares")+' · bought $'+bought.toFixed(2)+' · now $'+nowp.toFixed(2)+'</div>';
+        if (p.stop!=null){
+          var cap = (bought!=null? (bought-Number(p.stop))*qty*o.mult : null);
+          html += '<div class="sub stop">Stop $'+Number(p.stop).toFixed(2)+' = the robot sells by itself there'
+                + (cap!=null && cap>0 ? ', capping the loss at '+esc(money(cap)) : '') + '.</div>';
+        } else {
+          html += '<div class="sub stop">Stop: not yet read.</div>';
+        }
+      }
+      row.innerHTML = html; box.appendChild(row);
+    });
+  } else {
+    counts.hidden = true; term.hidden = true; sent.hidden = false;
+    sent.textContent = {
+      "Waiting for the open": "No trade is open yet. An entry only fires inside the window if every safety check passes.",
+      "Stopped out": "The robot sold at the stop to cap the loss. No new entry tonight.",
+      "Closed for the day": "The position was closed before the hard close. Nothing is held overnight.",
+      "No trade today": "The entry window passed without a ticket clearing every safety check. Nothing was traded.",
+      "No live data": "The account and watcher feeds are not reachable, so nothing is shown rather than a guess."
+    }[v] || "";
+    if ((v==="Closed for the day" || v==="Stopped out") && t && t.exit && t.entry){
+      var e = t.entry, x = t.exit;
+      var o = optName(e.symbol||x.symbol);
+      var qty = Number(x.qty||e.qty)||0;
+      var pl = (e.price!=null && x.price!=null) ? (Number(e.price)-Number(x.price))*qty*o.mult*(e.side==="short"?-1:1) : null;
+      var row = document.createElement("div"); row.className = "trade";
+      row.innerHTML = '<div class="main"><span class="sym">'+esc(o.label)+'</span>'
+        + (pl==null?'<span class="pl words">No live data</span>':'<span class="pl '+(pl>=0?"gain":"loss")+'">'+esc(signed(pl))+'</span>')+'</div>'
+        + '<div class="sub">closed '+esc(sgtHM(x.ts_utc))+' SGT' + (x.price!=null?' at $'+Number(x.price).toFixed(2):'') + '</div>';
+      box.appendChild(row); term.hidden = false;
+    }
+  }
+  var meta = $("tradeMeta");
+  if (a && a.ts_utc){
+    var age = (Date.now()-Date.parse(a.ts_utc))/1000;
+    meta.innerHTML = "moomoo paper account · " + (age>90?'<span class="staleword">STALE</span> · ':'') + esc(ageStr(a.ts_utc));
+  } else if (S && S.live_parts && S.live_parts.trade){
+    meta.textContent = "watcher runs · QCA read-only · " + ageStr(S.ts_utc);
+  } else {
+    meta.textContent = "waiting for the feed";
+  }
+  layoutTL();
+}
+
+/* ---------- night timeline (same layout rules as the approved picture) ---------- */
+function layoutTL(){
+  var tl = $("tl"); if(!tl) return;
+  var w = tl.clientWidth; if(!w) return;
+  var open = SESSION.open, close = SESSION.close, es = SESSION.es, ee = SESSION.ee;
+  if (!open || !close){ tl.style.visibility = "hidden"; return; }
+  tl.style.visibility = "";
+  var start = open - 90*60000, span = close - start;
+  var X = function(ms){ return (ms-start)/span*w; };
+  var cx = X((es+ee)/2), bw = Math.max(X(ee)-X(es), 26);
+  var bandL = cx-bw/2, bandR = cx+bw/2;
+  $("tlBand").style.left = bandL+"px"; $("tlBand").style.width = bw+"px";
+  $("tlOpen").style.left = X(open)+"px"; $("tlClose").style.left = (w-2)+"px";
+  var now = Date.now();
+  var nx = Math.max(0, Math.min(w, X(now)));
+  $("tlNow").style.left = nx+"px";
+  $("tlEntryLab").textContent = "entry "+sgtHM(es)+"–"+sgtHM(ee);
+  $("tlNowLab").textContent = "now "+sgtHM(now);
+  $("tlOpenLab").textContent = "open "+sgtHM(open);
+  $("tlCloseLab").textContent = "close "+sgtHM(close)+" (+1)";
+  var eLab=$("tlEntryLab"), nLab=$("tlNowLab"), oLab=$("tlOpenLab"), cLab=$("tlCloseLab");
+  eLab.className="lab above"; oLab.className="lab below";
+  eLab.style.left = Math.max(0,Math.min(bandL,w-eLab.offsetWidth))+"px";
+  oLab.style.left = Math.min(X(open),w-oLab.offsetWidth)+"px";
+  cLab.style.left = (w-cLab.offsetWidth)+"px";
+  /* +2pt type: if entry and close labels would touch, give close its own line */
+  if (eLab.offsetLeft + eLab.offsetWidth + 8 > cLab.offsetLeft){
+    cLab.className = "lab below2"; tl.style.height = "80px";
+  } else {
+    cLab.className = "lab below"; tl.style.height = "60px";
+  }
+  nLab.className="lab at";
+  var lw=nLab.offsetWidth, lx=nx+12;
+  if (lx+lw>w) lx=nx-12-lw;
+  if (lx<bandR && lx+lw>bandL){
+    nLab.className="lab above"; lw=nLab.offsetWidth;
+    lx=Math.max(oLab.offsetWidth+8,Math.min(nx-6,w-lw));
+    eLab.className="lab below";
+    eLab.style.left=Math.max(0,Math.min(bandL,w-eLab.offsetWidth))+"px";
+    oLab.className="lab above"; oLab.style.left="0px";
+    if (lx+lw>w) lx=w-lw;
+  }
+  nLab.style.left=Math.max(0,lx)+"px";
+}
+
+/* ---------- card 3: robot ---------- */
+function renderRobot(){
+  var live = S && S.live_parts && S.live_parts.watcher_deadman;
+  var w = S && S.roles && S.roles.watcher, d = S && S.roles && S.roles.deadman;
+  var verdict = $("robotVerdict"), sent = $("robotSentence"), meta = $("robotMeta");
+  if (!live || !w || !d){
+    verdict.textContent = "No live data"; verdict.className = "verdict";
+    sent.textContent = "The robot feed is not reachable, so nothing is shown rather than a guess.";
+    $("strip").innerHTML = ""; $("strip").classList.add("frozen");
+    $("feedState").textContent = "feed silent — strip frozen";
+    meta.textContent = "watcher + dead-man · QCA, read-only";
+    return;
+  }
+  var open = S.calendar && S.calendar.market_open_now;
+  var v, txt;
+  if (!open){ v="Healthy"; txt="The market is closed, so the watcher rests. Checks resume at the open."; }
+  else if (w.missed && d.missed){ v="Silent"; txt="Neither the watcher nor its backup alarm has checked in. Nothing is being watched right now."; }
+  else if (w.missed || d.missed){ v="Late"; txt="The watcher's last check-in is older than it should be, so the robot is running late."; }
+  else { v="Healthy"; txt="The watcher and its backup alarm both checked in on time."; }
+  verdict.textContent = v;
+  verdict.className = "verdict " + (v==="Healthy"?"gain":v==="Late"?"caution":"loss");
+  sent.textContent = txt;
+  /* strip: last 30 slots, newest right. Real check-ins fill from the right;
+     missed cadence slots (only while the market is open) become empty dashed
+     marks; slots before the feed existed / while resting stay faint, never
+     fabricated as check-ins or as misses. */
+  var marks = (w.strip||[]).slice(0,30).reverse().map(function(m){ return m.ok===true?"ok":m.ok===false?"err":"warn"; });
+  if (open && w.missed && w.last_run){
+    var gaps = Math.max(0, Math.floor(w.last_run.age_s / w.cadence_s) - 1);
+    for (var i=0;i<gaps;i++) marks.push("gap");
+  }
+  while (marks.length>30) marks.shift();
+  while (marks.length<30) marks.unshift("pre");
+  var key = marks.join(",");
+  var strip = $("strip");
+  if (key !== LAST_STRIP_KEY){          // re-render ONLY when check-ins change
+    LAST_STRIP_KEY = key;
+    strip.innerHTML = marks.map(function(m){ return m==="ok"?"<i></i>":'<i class="'+m+'"></i>'; }).join("");
+  }
+  strip.classList.toggle("frozen", !open || w.missed);
+  $("stripNote").textContent = "Each mark is one check-in, newest on the right." + ((open&&w.missed)?" The empty marks are missed check-ins.":"");
+  $("feedState").textContent = (!open) ? "market closed — strip resting" : (w.missed ? "feed silent — strip frozen" : "live feed — advances on each check-in");
+  var wa = w.last_run ? w.last_run.age_s : null, da = d.last_run ? d.last_run.age_s : null;
+  var lateNow = open && ((wa!=null&&wa>w.cadence_s*2)||(da!=null&&da>d.cadence_s*2));
+  meta.innerHTML = "Watcher " + (wa==null?"no run yet":esc(fmtAgeS(wa))) + " · dead-man " + (da==null?"no run yet":esc(fmtAgeS(da)))
+    + (lateNow ? ' · <span class="staleword">late</span>' : "");
+}
+function fmtAgeS(s){ s=Math.round(s); return s<60 ? s+"s ago" : s<3600 ? Math.floor(s/60)+" min ago" : Math.floor(s/3600)+"h "+Math.floor((s%3600)/60)+"m ago"; }
+
+/* ---------- card 4: report ---------- */
+function renderReport(){
+  var r = REPORT;
+  var verd = $("reportVerdict"), sent = $("reportSentence"), link = $("reportLink"), meta = $("reportMeta");
+  if (!r || !r.exists){
+    verd.textContent = "Not compiled yet"; verd.className = "summary";
+    sent.textContent = "The report compiles at 22:00 SGT, before the open. Nothing is shown rather than a guess.";
+    link.hidden = true;
+    meta.textContent = "Compiles 22:00 SGT, before the open, each trading day · Journal";
+    return;
+  }
+  verd.textContent = r.verdict || "Report ready."; verd.className = "summary";
+  sent.textContent = r.line || "The full report lists what each scout group found.";
+  link.hidden = false;
+  meta.innerHTML = "Journal · " + (r.ts_utc ? esc(ageStr(r.ts_utc)) : "age unknown");
+}
+
+/* ---------- top note: honest list of what is live ---------- */
+function renderNote(){
+  var el = $("livenote");
+  if (!S){ el.textContent = "No live data · mirror unreachable"; return; }
+  el.textContent = "Public mirror · pushed " + (PUSHED?ageStr(PUSHED):"unknown") + " · read-only";
+}
+
+function applyAll(){
+  if (S) setSession(S.trade);
+  renderAccount(); renderTrade(); renderRobot(); renderReport(); renderNote();
+}
+
+async function poll(){
+  try{
+    var r = await fetch("data/snapshot.json",{cache:"no-store"});
+    if(!r.ok) throw new Error("http "+r.status);
+    var s = await r.json();
+    S = s.live; REPORT = s.report; HIST = s.equity||[]; PUSHED = s.pushed_at;
+  }catch(e){ S = null; }
+  applyAll();
+}
+poll();
+setInterval(poll, 10000);
+setInterval(function(){ renderAccount(); renderTrade(); renderRobot(); }, 1000);  // ages + now dot tick; strip only on real check-ins
+window.addEventListener("resize", layoutTL);
+</script>
+</body>
+</html>
