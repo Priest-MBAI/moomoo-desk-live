@@ -1,7 +1,3 @@
-Report compiled and written to `/opt/team/reports/2026-11-20-premarket-scout-report.md` (the only copy; sandbox filesystem does not persist). Full text below, followed by the JSONL line for the desktop Orchestrator to append.
-
----
-
 # Pre-Market Scout Report — Friday 2026-11-20
 
 - Compiled by: Journal (sole writer of /opt/team/reports/). Compiled 2026-11-20 ~15:17 UTC (10:17 ET). Scout passes ran 13:29–13:42 UTC (08:29–08:42 ET), before the 09:30 ET open.
